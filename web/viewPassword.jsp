@@ -59,8 +59,8 @@
 
                     <form action="doAggiungiEmail.jsp">
                         <tr>
-                            <td><input class="form-control" type="text" name="email" /></td>
-                            <td><input class="form-control" type="password" name="password" /></td>
+                            <td><input class="form-control" type="text" name="email" placeholder="digita l'email"/></td>
+                            <td><input class="form-control" type="password" name="password" placeholder="digita la password associata"/></td>
                         <input  type="hidden" name="utente" value="${login.utente}" />
                         <td><button class="btn btn-primary">AGGIUNGI</button></td>
                         </tr>
@@ -77,7 +77,7 @@
                     <thead>
                         <tr class="intestazione">
                             <th data-column-id="idsito">IDSITO</th>
-                            <th data-column-id="nome">NOME</th>
+                            <th colspan="2" data-column-id="nome">NOME</th>
                             <th data-column-id="utente">UTENTE</th>
                             <th data-column-id="password">PASSWORD</th>
                             <th class="comandi">COMANDI</th>
@@ -88,7 +88,7 @@
                             for (SitoBean s : listaSiti.getLista()) {
                                 out.print("<tr>");
                                 out.print("<td>" + s.getIdSito() + "</td>");
-                                out.print("<td>" + s.getDescrizione() + "</td>");
+                                out.print("<td colspan=\"2\">" + s.getDescrizione() + "</td>");
                                 out.print("<td>" + s.getUtente() + "</td>");
                                 out.print("<td>" + s.getPassword() + "</td>");
                                 out.print("<td class=\"indirizzo\"><a href=\"viewModificaSito.jsp?idSito=" + s.getIdSito() + "\"> Modifica</a>");
@@ -103,20 +103,17 @@
 
                     <form action="doAggiungiSito.jsp">
                         <tr>
-                            <td><input class="form-control" type="text" name="descrizione" /></td>
-                            <td><input class="form-control" type="text" name="utente" /></td>
-                            <td><input class="form-control" type="password" name="password" /></td>
-                            <td><button class="btn btn-primary">AGGIUNGI</button></td>
+                            <td colspan="3"><input class="form-control" type="text" name="descrizione" placeholer="nome del sito"/></td>
+                            <td><input class="form-control" type="text" name="utente" placeholder="utente di login"/></td>
+                            <td><input class="form-control" type="password" name="password" placeholder="password del sito"/></td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <td colspan="5">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1">Indirizzo : </span>
-                                    </div>
-                                    <input type="text"  name="indirizzo" class="form-control" placeholder="Username" aria-label="Indirizzo" aria-describedby="basic-addon1">
-                                </div>
+                            <td colspan="4">
+                                <span class="input-group-addon" id="basic-addon1">Url : </span>
+                                <input  class="form-control" type="text"  name="indirizzo" placeholder="home page del sito web" aria-label="Indirizzo" aria-describedby="basic-addon1">
                             </td>
+                            <td><button class="btn btn-primary">AGGIUNGI</button></td>
                         </tr>
                         <input type="hidden" name="idTipo" value="${param.tipoSelezionato}"/>
                         <input type="hidden" name="idTipo" value="${login.utente}"/>
