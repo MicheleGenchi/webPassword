@@ -103,17 +103,19 @@
 
                     <form action="doAggiungiSito.jsp">
                         <tr>
-                            <td colspan="3"><input class="form-control" type="text" name="descrizione" placeholer="nome del sito"/></td>
+                            <td colspan="3"><input class="form-control" type="text" name="descrizione" placeholder="nome del sito"/></td>
                             <td><input class="form-control" type="text" name="utente" placeholder="utente di login"/></td>
                             <td><input class="form-control" type="password" name="password" placeholder="password del sito"/></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td colspan="4">
-                                <span class="input-group-addon" id="basic-addon1">Url : </span>
-                                <input  class="form-control" type="text"  name="indirizzo" placeholder="home page del sito web" aria-label="Indirizzo" aria-describedby="basic-addon1">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Url : </span>
+                                    <input  class="form-control" type="text"  name="indirizzo" placeholder="home page del sito web" />
+                                </div>
                             </td>
-                            <td><button class="btn btn-primary">AGGIUNGI</button></td>
+                            <td rowspan="2"><center><button class="btn btn-primary">AGGIUNGI</button></center></td>
                         </tr>
                         <input type="hidden" name="idTipo" value="${param.tipoSelezionato}"/>
                         <input type="hidden" name="idTipo" value="${login.utente}"/>
