@@ -13,7 +13,7 @@ import it.genchi.password.utilita.ErrMsg;
  *
  * @author JAVASE
  */
-abstract public class MYBean  {
+public class MYBean  {
     protected final ErrMsg errore;
 
     public MYBean() {

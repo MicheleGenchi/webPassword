@@ -7,23 +7,32 @@
 <%@page import="it.genchi.password.bean.SitoBean"%>
 <%@page import="it.genchi.password.bean.EmailBean"%>
 <%@page import="java.lang.reflect.Field"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="login" class="it.genchi.password.bean.LoginBean" scope="session" />
-<jsp:useBean id="listaEmail" class="it.genchi.password.bean.ListaEmailBean" scope="session" />
-<jsp:useBean id="listaSiti" class="it.genchi.password.bean.ListaSitiBean" scope="session" />
+<jsp:useBean id="listaEmail" class="it.genchi.password.bean.ListaEmailBean" scope="request" />
+<jsp:useBean id="listaSiti" class="it.genchi.password.bean.ListaSitiBean" scope="request" />
 <jsp:useBean id="tipi" class="it.genchi.password.bean.MapTipoBean" scope="session" />
-<jsp:useBean id="email" class="it.genchi.password.bean.EmailBean" scope="session" />
-<jsp:useBean id="sito" class="it.genchi.password.bean.SitoBean" scope="session" />
+<jsp:useBean id="email" class="it.genchi.password.bean.EmailBean" scope="request" />
+<jsp:useBean id="sito" class="it.genchi.password.bean.SitoBean" scope="request" />
 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Password</title>
+        <title>Pagina di visualizzazione delle password</title>
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     </head>
     <body>
 
+        <%
+            if (email.getErrore().isErr()) {
+                out.println("<ul>");
+                for (String msg : email.getErrore().getMsgs()) {
+                    out.println("<li>" + msg + "</li>");
+                }
+                out.println("</ul>");
+            }
+        %>
 
         <div class="container">
             <div class="panel panel-info">
@@ -60,8 +69,9 @@
                     <form action="doAggiungiEmail.jsp">
                         <tr>
                             <td><input class="form-control" type="text" name="email" placeholder="digita l'email"/></td>
-                            <td><input class="form-control" type="password" name="password" placeholder="digita la password associata"/></td>
+                            <td><input class="form-control" type="password" name="ePassword" placeholder="digita la password associata"/></td>
                         <input  type="hidden" name="utente" value="${login.utente}" />
+                        <input type="hidden" name="tipoSelezionato" value="${param.tipoSelezionato}" />
                         <td><button class="btn btn-primary">AGGIUNGI</button></td>
                         </tr>
                     </form>
@@ -71,7 +81,7 @@
 
 
                 <div class="panel panel-info">
-                    <div class="panel-heading bg-info">Gruppo password : ${tipi.getTipi().get(param.tipoSelezionato)}</div>
+                    <div class="panel-heading bg-info">Gruppo : ${tipi.getTipi().get(param.tipoSelezionato)}</div>
                 </div>                            
                 <table class="table table-condensed table-hover table-striped">
                     <thead>
