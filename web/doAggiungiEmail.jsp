@@ -12,7 +12,8 @@
 
 <%
     EmailDAO dao=new EmailDAO();
-    dao.aggiungi(email);
+    if (!dao.aggiungi(email))
+        email.getErrore().aggiungi(Errors.InsertFailure);
 %>
 <jsp:forward page="doPassword.jsp"/>;
 

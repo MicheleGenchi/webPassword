@@ -11,6 +11,7 @@ package it.genchi.password.utilita;
  * @author JAVASE
  */
 public enum Errors {
+    InsertFailure("I dati sono incompleti, operazione di insert fallita"),
     CampoInvalido("Questo campo deve essere digitato"), 
     PosizioneInvalida("La voce selezionata non può essere cancellata o modificata"),
     DataBaseInsesistente("Impossibile recuperare i dati dal server db"),
