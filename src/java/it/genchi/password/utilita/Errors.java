@@ -18,7 +18,6 @@ public enum Errors {
     LoginFallito("Utente e password non presenti nel db"),
     RegistrazioneFallita("Non é stato possibile registrare l'utente");
     
-    
     final private String descrizione;
     
     private Errors(String descrizione) {
