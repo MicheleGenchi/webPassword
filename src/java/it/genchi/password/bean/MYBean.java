@@ -19,11 +19,8 @@ public class MYBean  {
     public MYBean() {
         this.errore = new ErrMsg();
     }
-
     
     public ErrMsg getErrore() {
         return this.errore;
     }
-    
-    
 }
