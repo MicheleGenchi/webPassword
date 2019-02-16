@@ -14,9 +14,9 @@ import javax.swing.JOptionPane;
  */
 public class MsgBox {
 
-    public static void show(String messaggio) {
+    public static void show(String title,String messaggio) {
         JOptionPane optionPane = new JOptionPane(messaggio, JOptionPane.WARNING_MESSAGE);
-        JDialog dialog = optionPane.createDialog("Warning!");
+        JDialog dialog = optionPane.createDialog(title);
         dialog.setAlwaysOnTop(true); // to show top of all other application
         dialog.setVisible(true); // to visible the dialog
     }

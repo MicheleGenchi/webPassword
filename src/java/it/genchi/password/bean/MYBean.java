@@ -14,10 +14,14 @@ import it.genchi.password.utilita.ErrMsg;
  * @author JAVASE
  */
 public class MYBean  {
-    protected final ErrMsg errore;
+    protected ErrMsg errore;
 
     public MYBean() {
         this.errore = new ErrMsg();
+    }
+    
+    public void setErrore(ErrMsg errore) {
+        this.errore=errore;
     }
     
     public ErrMsg getErrore() {

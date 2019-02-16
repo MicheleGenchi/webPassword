@@ -13,6 +13,7 @@
 <jsp:useBean id="tipi" class="it.genchi.password.bean.MapTipoBean" scope="session" />
 <jsp:useBean id="email" class="it.genchi.password.bean.EmailBean" scope="request" />
 <jsp:useBean id="sito" class="it.genchi.password.bean.SitoBean" scope="request" />
+<jsp:useBean id="errori" class="it.genchi.password.utilita.ErrMsg" scope="request" />
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -24,15 +25,12 @@
     </head>
     <body>
 
-        <%
-            if (email.getErrore().isErr()) {
-                out.println("<ul>");
-                for (String msg : email.getErrore().getMsgs()) {
-                    out.println("<li>" + msg + "</li>");
-                }
-                out.println("</ul>");
-            }
+       <% 
+        errori.setMsgs(email.getErrore().getMsgs());
+        errori.getMsgs().addAll(sito.getErrore().getMsgs());
         %>
+              
+       <jsp:include page="doErrori.jsp?title=Problemi nella pagina delle Password" />
 
         <div class="container">
             <div class="panel panel-info">

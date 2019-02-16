@@ -8,6 +8,7 @@
 <%@page import="java.lang.reflect.Field"%>
 <jsp:useBean id="login" class="it.genchi.password.bean.LoginBean" scope="session" />
 <jsp:useBean id="email" class="it.genchi.password.bean.EmailBean" scope="request" />
+<jsp:useBean id="errori" class="it.genchi.password.utilita.ErrMsg" scope="request" />
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -18,25 +19,11 @@
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     </head>
     <body>
-        <%
-            if (login.getErrore().isErr()) {
-                out.println("<h2>Problemi di registrazione</h2>");
-                out.println("<ul>");
-                for (String msg : login.getErrore().getMsgs()) {
-                    out.println("<li>" + msg + "</li>");
-                }
-                out.println("</ul>");
-            }
 
-            if (email.getErrore().isErr()) {
-                out.println("<ul>");
-
-                for (String msg : email.getErrore().getMsgs()) {
-                    out.println("<li>" + msg + "</li>");
-                }
-                out.println("</ul>");
-            }
+        <% errori.setMsgs(login.getErrore().getMsgs());
+           errori.getMsgs().addAll(email.getErrore().getMsgs());
         %>
+        <jsp:include page="doErrori.jsp?title=Problemi nella pagina di Registrazione" />
 
         <div class="container">    
             <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2">                                

@@ -15,19 +15,20 @@
     LoginDAO loginDAO = new LoginDAO();
     String button = request.getParameter("conferma");
     login.getErrore().clear();
-    
+
     switch (button) {
         case "Nuovo":
-        %><jsp:forward page="viewRegistrazione.jsp" /><%
-        case "Entra": 
-            if (login.isValid() && loginDAO.trovato(login)) {
-                %><jsp:forward page="doTipo.jsp" /><%
-                } else {
-                    login.getErrore().aggiungi(Errors.LoginFallito);
-                %><jsp:forward page="viewLogin.jsp" /><%
-                }
+            %><jsp:forward page="viewRegistrazione.jsp" /><%
+                case "Entra":
+                    if (login.isValid()) {
+                        if (loginDAO.trovato(login)) {
+                            %><jsp:forward page="doTipo.jsp" /><%
+                        } else {
+                            login.getErrore().aggiungi(Errors.LoginFallito);
+                        }
+                    }
+                        %><jsp:forward page="viewLogin.jsp" /><%
     }
-
 %>
 
 

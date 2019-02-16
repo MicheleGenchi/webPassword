@@ -14,12 +14,16 @@ import java.util.List;
  * @author JAVASE
  */
 public class ErrMsg {
-    private final List<String> msgs;
+    private List<String> msgs;
 
     public ErrMsg() {
         this.msgs = new ArrayList<String>();
     }
 
+    public void setMsgs(List<String> msgs) {
+        this.msgs = msgs;
+    }
+    
      public List<String> getMsgs() {
         return msgs;
     }

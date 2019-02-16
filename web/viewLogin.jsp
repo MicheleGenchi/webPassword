@@ -5,7 +5,7 @@
 --%>
 
 <jsp:useBean id="login" class="it.genchi.password.bean.LoginBean" scope="session" />
-<jsp:useBean id="bean" class="it.genchi.password.bean.MYBean" scope="session" />
+<jsp:useBean id="errori" class="it.genchi.password.utilita.ErrMsg" scope="request" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,10 +14,12 @@
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     </head>
     <body class="bg-dark">
+
         <%
-            bean=login;
+            errori.setMsgs(login.getErrore().getMsgs());
         %>
-        <jsp:include page="doError.jsp" />
+        <jsp:include page="doErrori.jsp?title=Problemi nella pagina di Login" />
+
 
         <div class="container">    
             <div id="loginbox" style="margin-top:100px;" class="mainbox col-md-3 col-md-offset-4 col-sm-8 col-sm-offset-2">                    
