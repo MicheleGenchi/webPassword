@@ -16,24 +16,33 @@
 <%
     login.getErrore().clear();
     email.getErrore().clear();
-
-    if (login.isValid())  {
+   
+    if (login.isValid()) {
         LoginDAO daoLogin = new LoginDAO();
         boolean esiste = daoLogin.trovato(login.getUtente());
 
         if (esiste) {
             login.getErrore().clear();
             login.getErrore().aggiungi(Errors.DuplicateUtente);
-        } else if (email.isValid()) {
-            EmailDAO daoEmail = new EmailDAO();
-            daoLogin.aggiungi(login);
-            daoEmail.aggiungi(email);
-            %><jsp:forward page="registrazioneOK.jsp" />
-                <jsp:forward page="doTipo.jsp" /><%
-        } else {
-            email.getErrore().aggiungi(Errors.InvalidEmail);
+            if (!email.isValid()) {
+                   email.getErrore().aggiungi(Errors.InvalidEmail);
+            }
         }
-    } 
-%>
+    }
 
-<jsp:forward page="viewRegistrazione.jsp" />
+    if (login.getErrore().isErr() || email.getErrore().isErr()) {
+        %><jsp:forward page="viewRegistrazione.jsp" /><%
+    } else {
+        LoginDAO daoLogin=new LoginDAO();
+        EmailDAO daoEmail=new EmailDAO();
+        daoLogin.aggiungi(login);
+        daoEmail.aggiungi(email);
+    %>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        swal("Congratulazione!", "Utente registrato con successo...", "success");
+    </script>
+    <jsp:forward page="doTipo.jsp" /><%
+        }
+%>

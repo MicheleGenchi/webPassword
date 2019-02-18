@@ -16,7 +16,6 @@
  %>
  
     <script  src = "//code.jquery.com/jquery-1.11.1.min.js" > </script> 
-    <script  src = "bootstrap/bootstrap.min.js" > </script>
     <script  src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js" > </script>
     <script>
         swal("Alert!", $('#messaggio').text(), "warning");
