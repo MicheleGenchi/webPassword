@@ -4,7 +4,7 @@
     Author     : JAVASE
 --%>
 
-<jsp:useBean id="login" class="it.genchi.password.bean.LoginBean" scope="request" />
+<jsp:useBean id="login" class="it.genchi.password.bean.LoginBean" scope="session" />
 <jsp:useBean id="errori" class="it.genchi.password.utilita.ErrMsg" scope="request" />
 <!DOCTYPE html>
 <html>

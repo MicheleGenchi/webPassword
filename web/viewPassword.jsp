@@ -25,13 +25,6 @@
     </head>
     <body>
 
-       <% 
-        errori.setMsgs(email.getErrore().getMsgs());
-        errori.getMsgs().addAll(sito.getErrore().getMsgs());
-        %>
-              
-       <jsp:include page="doErrori.jsp?title=Problemi nella pagina delle Password" />
-
         <div class="container">
             <div class="panel panel-info">
                 <div class="panel-heading bg-info">

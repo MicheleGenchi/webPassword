@@ -14,20 +14,19 @@
 <jsp:setProperty name="email" property="*"/>
 
 <%
+    LoginDAO daoLogin = new LoginDAO();
+    EmailDAO daoEmail = new EmailDAO();
     login.getErrore().clear();
     email.getErrore().clear();
-
     if (login.isValid()) {
-        LoginDAO daoLogin = new LoginDAO();
         boolean esiste = daoLogin.trova(login.getUtente());
-
         if (esiste) {
-            login.getErrore().clear();
             login.getErrore().aggiungi(Errors.DuplicateUtente);
+        } else {
             if (!email.isValid()) {
-                   email.getErrore().aggiungi(Errors.InvalidEmail);
-                EmailDAO daoEmail=new EmailDAO();
-                esiste=daoEmail.trova(email.getEmail());
+                email.getErrore().aggiungi(Errors.InvalidEmail);
+            } else {
+                esiste = daoEmail.trova(email.getEmail());
                 if (esiste) {
                     email.getErrore().aggiungi(Errors.DuplicateEmail);
                 }
@@ -37,17 +36,16 @@
 
     if (login.getErrore().isErr() || email.getErrore().isErr()) {
         %><jsp:forward page="viewRegistrazione.jsp" /><%
-    } else {
-        LoginDAO daoLogin=new LoginDAO();
-        EmailDAO daoEmail=new EmailDAO();
-        daoLogin.aggiungi(login);
-        daoEmail.aggiungi(email);
-    %>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script>
-        swal("Congratulazione!", "Utente registrato con successo...", "success");
-    </script>
-    <jsp:forward page="doTipo.jsp" /><%
-        }
+        } else {
+            daoLogin.aggiungi(login);
+            daoEmail.aggiungi(email);
+
+%>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    swal("Congratulazione!", "Utente registrato con successo...", "success");
+</script>
+<jsp:forward page="doTipo.jsp" /><%    
+}
 %>

@@ -18,7 +18,8 @@ public enum Errors {
     LoginFallito("Utente e password non presenti nel db"),
     RegistrazioneFallita("Non é stato possibile registrare l'utente"),
     DuplicateUtente("Esiste già un utente con questo nome"),
-    InvalidEmail("Impossibile convalidare l'email di registrazione");
+    InvalidEmail("Impossibile convalidare l'email di registrazione"),
+    DuplicateEmail("L'email é già presente nel mio archivio");
     
     final private String descrizione;
     
