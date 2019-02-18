@@ -10,20 +10,26 @@
 <jsp:useBean id="email" class="it.genchi.password.bean.EmailBean" scope="request" />
 <jsp:useBean id="errori" class="it.genchi.password.utilita.ErrMsg" scope="request" />
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Pagina di registrazione</title>
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <title>Pagina di registrazione utente</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" />
     </head>
     <body>
 
-        <% errori.setMsgs(login.getErrore().getMsgs());
-           errori.getMsgs().addAll(email.getErrore().getMsgs());
+        <%
+            if (login.getErrore().isErr()) {
+                errori.setMsgs(login.getErrore().getMsgs());
+        %><jsp:include page="doErrori.jsp" /><%
+        } else if (email.getErrore().isErr()) {
+            errori.clear();
+            errori.getMsgs().addAll(email.getErrore().getMsgs());
+        %><jsp:include page="doErrori.jsp" /><%
+    }
         %>
-        <jsp:include page="doErrori.jsp?title=Problemi nella pagina di Registrazione" />
+
 
         <div class="container">    
             <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2">                                
@@ -64,7 +70,7 @@
                 </div>  
             </div>
             <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-            <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+            <script src="bootstrap/bootstrap.min.js"></script>
     </body>
 </html>
 

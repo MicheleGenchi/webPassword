@@ -6,7 +6,6 @@
 package it.genchi.password.utilita;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -17,7 +16,7 @@ public class ErrMsg {
     private List<String> msgs;
 
     public ErrMsg() {
-        this.msgs = new ArrayList<String>();
+        this.msgs = new ArrayList<>();
     }
 
     public void setMsgs(List<String> msgs) {

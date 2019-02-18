@@ -16,7 +16,9 @@ public enum Errors {
     PosizioneInvalida("La voce selezionata non può essere cancellata o modificata"),
     DataBaseInsesistente("Impossibile recuperare i dati dal server db"),
     LoginFallito("Utente e password non presenti nel db"),
-    RegistrazioneFallita("Non é stato possibile registrare l'utente");
+    RegistrazioneFallita("Non é stato possibile registrare l'utente"),
+    DuplicateUtente("Esiste già un utente con questo nome"),
+    InvalidEmail("Impossibile convalidare l'email di registrazione");
     
     final private String descrizione;
     

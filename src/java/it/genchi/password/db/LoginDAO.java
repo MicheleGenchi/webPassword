@@ -21,15 +21,14 @@ import java.util.logging.Logger;
  */
 public class LoginDAO extends DAOClass {
 
-    public boolean trovato(LoginBean login) {
+    public boolean trovato(String utenteLogin) {
         boolean trovato = false;
         String sql = "SELECT utente, password FROM password2.login "
-                + "where utente=? and password=? order by utente;";
-        try {
+                + "where utente=? order by utente;";
+        try (
             Connection conn = DBConnect.get();
-            PreparedStatement st = conn.prepareStatement(sql);
-            st.setString(1, login.getUtente());
-            st.setString(2, login.getPassword());
+            PreparedStatement st = conn.prepareStatement(sql)) {
+            st.setString(1, utenteLogin);
             ResultSet rs = st.executeQuery();
             trovato = rs.next();
             st.close();

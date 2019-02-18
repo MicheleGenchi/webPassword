@@ -4,8 +4,10 @@
     Author     : JAVASE
 --%>
 
+<%@page import="it.genchi.password.utilita.Errors"%>
 <%@page import="it.genchi.password.db.LoginDAO"%>
 <%@page import="it.genchi.password.db.EmailDAO"%>
+<jsp:useBean id="registration" class="it.genchi.password.bean.RegistrationBean" scope="request" />
 <jsp:useBean id="email" class="it.genchi.password.bean.EmailBean" scope="request" />
 <jsp:useBean id="login" class="it.genchi.password.bean.LoginBean" scope="session" />
 <jsp:setProperty name="login" property="*" />
@@ -14,25 +16,24 @@
 <%
     login.getErrore().clear();
     email.getErrore().clear();
-    
-    LoginDAO daoLogin=new LoginDAO();
-    if (login.isValid()) {
-        boolean esiste=daoLogin.trovato(login);
+
+    if (login.isValid())  {
+        LoginDAO daoLogin = new LoginDAO();
+        boolean esiste = daoLogin.trovato(login.getUtente());
+
         if (esiste) {
-            login.getErrore().aggiungi("L'utente é già registrato");
-            %><jsp:forward page="viewRegistrazione.jsp" /><%
+            login.getErrore().clear();
+            login.getErrore().aggiungi(Errors.DuplicateUtente);
+        } else if (email.isValid()) {
+            EmailDAO daoEmail = new EmailDAO();
+            daoLogin.aggiungi(login);
+            daoEmail.aggiungi(email);
+            %><jsp:forward page="registrazioneOK.jsp" />
+                <jsp:forward page="doTipo.jsp" /><%
         } else {
-            EmailDAO daoEmail=new EmailDAO();
-            if (email.isValid()) {
-                daoLogin.aggiungi(login);
-                daoEmail.aggiungi(email);
-                %><jsp:forward page="RegistrazioneOK.jsp" /><%
-            } else {
-                %><jsp:forward page="viewRegistrazione.jsp" /><%    
-            }
+            email.getErrore().aggiungi(Errors.InvalidEmail);
         }
-    } else {
-        %><jsp:forward page="viewRegistrazione.jsp" /><%
-    }   
+    } 
 %>
 
+<jsp:forward page="viewRegistrazione.jsp" />
