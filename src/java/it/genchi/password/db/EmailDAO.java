@@ -23,21 +23,15 @@ public class EmailDAO extends DAOClass {
 
     public boolean trova(String email) {
         boolean trovata = false;
-        ListaEmailBean lista = new ListaEmailBean();
-        String sql = "SELECT email, utente, password FROM email where email=? order by email;";
+        String sql = "SELECT count(*) FROM email where email=?";
         try (
-            Connection conn = DBConnect.get();
-            PreparedStatement st = conn.prepareStatement(sql)) {
+                Connection conn = DBConnect.get();
+                PreparedStatement st = conn.prepareStatement(sql)) {
             st.setString(1, email); //utente
             ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                EmailBean emailB= new EmailBean();
-                emailB.setEmail(rs.getString("email"));
-                emailB.setePassword(rs.getString("password"));
-                emailB.setUtente(rs.getString("utente"));
-                lista.aggiungi(emailB);
+            if (rs.next()) {
+                trovata = (rs.getInt(1) > 0);
             }
-            trovata = true;
             st.close();
             conn.close();
         } catch (SQLException ex) {

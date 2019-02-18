@@ -14,10 +14,10 @@
 <jsp:setProperty name="email" property="*"/>
 
 <%
-    LoginDAO daoLogin = new LoginDAO();
-    EmailDAO daoEmail = new EmailDAO();
     login.getErrore().clear();
     email.getErrore().clear();
+    LoginDAO daoLogin = new LoginDAO();
+    EmailDAO daoEmail = new EmailDAO();
     if (login.isValid()) {
         boolean esiste = daoLogin.trova(login.getUtente());
         if (esiste) {
@@ -36,16 +36,15 @@
 
     if (login.getErrore().isErr() || email.getErrore().isErr()) {
         %><jsp:forward page="viewRegistrazione.jsp" /><%
-        } else {
-            daoLogin.aggiungi(login);
-            daoEmail.aggiungi(email);
+    } else {
+        daoLogin.aggiungi(login);
+        daoEmail.aggiungi(email);
 
-%>
+    %>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
     swal("Congratulazione!", "Utente registrato con successo...", "success");
 </script>
-<jsp:forward page="doTipo.jsp" /><%    
-}
+<jsp:forward page="doTipo.jsp" /><%    }
 %>

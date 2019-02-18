@@ -28,10 +28,10 @@ public class LoginDAO extends DAOClass {
         String sql="";
         boolean trovato = false;
         if (!password.isEmpty()) {
-        sql = "SELECT utente, password FROM password2.login "
+        sql = "SELECT count(*) FROM password2.login "
                 + "where utente=? and password=? order by utente;";
         } else {
-            sql = "SELECT utente, password FROM password2.login "
+            sql = "SELECT count(*) FROM password2.login "
                 + "where utente=? order by utente;";
         }
         
@@ -42,7 +42,8 @@ public class LoginDAO extends DAOClass {
             if (!password.isEmpty()) 
                 st.setString(2, password);
             ResultSet rs = st.executeQuery();
-            trovato = rs.next();
+            if (rs.next())
+                trovato = (rs.getInt(1)>0);
             st.close();
             conn.close();
         } catch (Exception ex) {
