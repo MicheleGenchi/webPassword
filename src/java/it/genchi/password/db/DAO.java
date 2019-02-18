@@ -8,12 +8,8 @@ package it.genchi.password.db;
 import it.genchi.password.bean.ListaBean;
 import it.genchi.password.bean.MYBean;
 
-/**
- *
- * @author JAVASE
- */
 public interface DAO {
- 
+    
     boolean fill(ListaBean lista, String...stringa); 
     boolean fill(ListaBean lista, MYBean myBean);
     boolean fill(ListaBean lista);

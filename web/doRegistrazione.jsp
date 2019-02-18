@@ -16,16 +16,21 @@
 <%
     login.getErrore().clear();
     email.getErrore().clear();
-   
+
     if (login.isValid()) {
         LoginDAO daoLogin = new LoginDAO();
-        boolean esiste = daoLogin.trovato(login.getUtente());
+        boolean esiste = daoLogin.trova(login.getUtente());
 
         if (esiste) {
             login.getErrore().clear();
             login.getErrore().aggiungi(Errors.DuplicateUtente);
             if (!email.isValid()) {
                    email.getErrore().aggiungi(Errors.InvalidEmail);
+                EmailDAO daoEmail=new EmailDAO();
+                esiste=daoEmail.trova(email.getEmail());
+                if (esiste) {
+                    email.getErrore().aggiungi(Errors.DuplicateEmail);
+                }
             }
         }
     }

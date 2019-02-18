@@ -17,7 +17,7 @@
     LoginDAO loginDAO = new LoginDAO();
 
     if (login.isValid()) {
-        if (loginDAO.trovato(login.getUtente())) {
+        if (loginDAO.trova(login.getUtente())) {
             %><jsp:forward page="doTipo.jsp" /><%
         } else {                           
             login.getErrore().aggiungi(Errors.LoginFallito);

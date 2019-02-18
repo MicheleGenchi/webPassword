@@ -6,7 +6,6 @@
 package it.genchi.password.db;
 
 import it.genchi.password.bean.LoginBean;
-import it.genchi.password.utilita.ErrMsg;
 import it.genchi.password.utilita.Errors;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,14 +20,27 @@ import java.util.logging.Logger;
  */
 public class LoginDAO extends DAOClass {
 
-    public boolean trovato(String utenteLogin) {
+    public boolean trova(String utenteLogin) {
+        return trovato(utenteLogin, "");
+    }
+    
+    public boolean trovato(String utenteLogin, String password) {
+        String sql="";
         boolean trovato = false;
-        String sql = "SELECT utente, password FROM password2.login "
+        if (!password.isEmpty()) {
+        sql = "SELECT utente, password FROM password2.login "
+                + "where utente=? and password=? order by utente;";
+        } else {
+            sql = "SELECT utente, password FROM password2.login "
                 + "where utente=? order by utente;";
+        }
+        
         try (
             Connection conn = DBConnect.get();
             PreparedStatement st = conn.prepareStatement(sql)) {
             st.setString(1, utenteLogin);
+            if (!password.isEmpty()) 
+                st.setString(2, password);
             ResultSet rs = st.executeQuery();
             trovato = rs.next();
             st.close();

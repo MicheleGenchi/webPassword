@@ -6,17 +6,10 @@
  */
 package it.genchi.password.db;
 
-import it.genchi.password.bean.EmailBean;
+
 import it.genchi.password.bean.ListaBean;
-import it.genchi.password.bean.LoginBean;
 import it.genchi.password.bean.MYBean;
 import it.genchi.password.utilita.ErrMsg;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class DAOClass implements DAO {
     protected ErrMsg errore;

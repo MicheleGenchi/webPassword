@@ -8,7 +8,6 @@ package it.genchi.password.db;
 import it.genchi.password.bean.EmailBean;
 import it.genchi.password.bean.ListaBean;
 import it.genchi.password.bean.ListaEmailBean;
-import it.genchi.password.bean.MYBean;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,6 +20,33 @@ import java.util.logging.Logger;
  * @author JAVASE
  */
 public class EmailDAO extends DAOClass {
+
+    public boolean trova(String email) {
+        boolean trovata = false;
+        ListaEmailBean lista = new ListaEmailBean();
+        String sql = "SELECT email, utente, password FROM email where email=? order by email;";
+        try (
+            Connection conn = DBConnect.get();
+            PreparedStatement st = conn.prepareStatement(sql)) {
+            st.setString(1, email); //utente
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                EmailBean emailB= new EmailBean();
+                emailB.setEmail(rs.getString("email"));
+                emailB.setePassword(rs.getString("password"));
+                emailB.setUtente(rs.getString("utente"));
+                lista.aggiungi(emailB);
+            }
+            trovata = true;
+            st.close();
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(TipoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException("database error in " + this.getClass().getSimpleName(), ex);
+        } finally {
+            return trovata;
+        }
+    }
 
     @Override
     public boolean fill(ListaBean lista, String... stringa) {
