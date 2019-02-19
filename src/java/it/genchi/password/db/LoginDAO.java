@@ -25,7 +25,7 @@ public class LoginDAO extends DAOClass {
     }
     
     public boolean trovato(String utenteLogin, String password) {
-        String sql="";
+        String sql;
         boolean trovato = false;
         if (!password.isEmpty()) {
         sql = "SELECT count(*) FROM password2.login "

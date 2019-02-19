@@ -16,7 +16,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Pagina di scelta del gruppo</title>
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     </head>
     <body>
@@ -28,7 +28,7 @@
                         <div class="panel-heading bg-info">
                             <div class="panel-title">Le password sono divise in gruppi:</div><br/>
                             <div class="panel panel-info">
-                                Utente : ${param.utente}
+                                Utente : ${login.utente}
                             </div> 
                         </div>  
 

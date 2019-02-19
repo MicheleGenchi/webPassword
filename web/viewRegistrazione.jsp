@@ -21,11 +21,11 @@
         <%
             if (login.getErrore().isErr()) {
                 errori.setMsgs(login.getErrore().getMsgs());
-                %><jsp:include page="doErrori.jsp" /><%
+        %><jsp:include page="doErrori.jsp" /><%
                 } else if (email.getErrore().isErr()) {
                     errori.getMsgs().addAll(email.getErrore().getMsgs());
-                    %><jsp:include page="doErrori.jsp" /><%
-                }
+        %><jsp:include page="doErrori.jsp" /><%
+                        }
         %>
 
 

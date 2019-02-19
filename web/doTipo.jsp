@@ -11,6 +11,6 @@
 
 <%
     TipoDAO dao = new TipoDAO();
-    dao.fill(tipi, login.getUtente());
+    dao.fill(tipi);
 %>
 <jsp:forward page="viewTipo.jsp" />

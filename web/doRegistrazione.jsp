@@ -35,16 +35,11 @@
     }
 
     if (login.getErrore().isErr() || email.getErrore().isErr()) {
-        %><jsp:forward page="viewRegistrazione.jsp" /><%
-    } else {
-        daoLogin.aggiungi(login);
-        daoEmail.aggiungi(email);
+%><jsp:forward page="viewRegistrazione.jsp" /><%
+        } else {
+            daoLogin.aggiungi(login);
+            daoEmail.aggiungi(email);
 
-    %>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script>
-    swal("Congratulazione!", "Utente registrato con successo...", "success");
-</script>
-<jsp:forward page="doTipo.jsp" /><%    }
+%><jsp:forward page="registrazioneOK.jsp" /><%        
+}
 %>
