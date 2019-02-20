@@ -38,8 +38,8 @@
                             <form id="formGruppo" class="form-horizontal" role="form" action="doPassword.jsp">
                                 <div style="margin-bottom: 25px" class="input-group">
                                     <span class="input-group-addon">Gruppo:</span>
-                                    <select class="form-control inputstl" id="inputGroupSelect04" aria-label="Selezionare il gruppo" name="tipoSelezionato">
-                                        <option  value="NN" selected>Seleziona un gruppo...</option>
+                                    <select autofocus class="form-control inputstl" id="inputGroupSelect04" aria-label="Selezionare il gruppo" name="tipoSelezionato">
+                                        <option  value="" selected>Seleziona un gruppo...</option>
                                         <%
                                             /* viene generato l'elenco delle option, interrogando il contenuto
                                                  * della enum Continenti. In quella corrispondente al valore del bean,
@@ -60,7 +60,7 @@
                                 <div style="margin-top:10px" class="form-group">
                                     <!-- Button -->
                                     <div class="col-sm-12 controls">
-                                        <button id="sceltaGruppo" class="btn btn-success">Visualizza le password</button>
+                                        <button type="submit" id="sceltaGruppo" class="btn btn-success">Visualizza le password</button>
                                     </div>
                                 </div>
                             </form>        
