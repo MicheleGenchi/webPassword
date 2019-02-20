@@ -27,7 +27,7 @@ public class SitiDAO extends DAOClass {
     public boolean fill(ListaBean lista, String...stringa) {
         boolean valid=false;
         String sql = "SELECT idSito,descrizione,indirizzo,utente,password, "
-                + "idTipo,Login FROM password2.sito where Login=? and idTipo=? order by descrizione;";
+                + "idTipo,login FROM password2.sito where login=? and idTipo=? order by descrizione;";
 
         try { 
             Connection conn = DBConnect.get();

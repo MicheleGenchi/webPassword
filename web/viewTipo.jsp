@@ -15,9 +15,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Pagina di scelta del gruppo</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <title>Pagina di scelta del gruppo</title>
     </head>
     <body>
 
@@ -37,7 +39,7 @@
                                 <div style="margin-bottom: 25px" class="input-group">
                                     <span class="input-group-addon">Gruppo:</span>
                                     <select class="form-control inputstl" id="inputGroupSelect04" aria-label="Selezionare il gruppo" name="tipoSelezionato">
-                                        <option  value="" selected>Seleziona un gruppo...</option>
+                                        <option  value="NN" selected>Seleziona un gruppo...</option>
                                         <%
                                             /* viene generato l'elenco delle option, interrogando il contenuto
                                                  * della enum Continenti. In quella corrispondente al valore del bean,
@@ -61,14 +63,13 @@
                                         <button id="sceltaGruppo" class="btn btn-success">Visualizza le password</button>
                                     </div>
                                 </div>
+                            </form>        
                         </div>
-                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+
         <script>
             $(document).ready(function () {
                 var $submit = $('#sceltaGruppo');

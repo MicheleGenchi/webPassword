@@ -7,45 +7,55 @@
 <jsp:useBean id="login" class="it.genchi.password.bean.LoginBean" scope="session" />
 <jsp:useBean id="errori" class="it.genchi.password.utilita.ErrMsg" scope="request" />
 <!DOCTYPE html>
-<html>
+<hmtl>
     <head>
-        <title>Login archivio password</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <title>Login archivio password</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </head>
     <body class="bg-dark">
         <%
-
             if (login.getErrore().isErr()) {
                 errori.setMsgs(login.getErrore().getMsgs());
-                %><jsp:include page="doErrori.jsp" /><%
+        %><jsp:include page="doErrori.jsp" /><%
             }
         %>
 
         <div class="container">    
-            <div id="loginbox" style="margin-top:100px;" class="mainbox col-md-3 col-md-offset-4 col-sm-8 col-sm-offset-2">                    
+            <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-3 col-md-offset-4 col-sm-8 col-sm-offset-2">                    
                 <div class="panel panel-info" >
-                    <div class="panel-heading bg-info">
-                        <div class="panel-title">Archivio password</div>
+                    <div class="panel-heading">
+                        <div class="panel-title">Accesso al programma</div>
+                        <div style="float:right; font-size: 80%; position: relative; top:-10px"></div>
                     </div>     
 
                     <div style="padding-top:30px" class="panel-body" >
+
+                        <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+
                         <form id="loginform" class="form-horizontal" role="form">
+
                             <div style="margin-bottom: 25px" class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                <input id="login-username" type="text" class="form-control" name="utente" value="${login.utente}" placeholder="digita l'utente" />                                        
+                                <input id="login-username" type="text" class="form-control" name="utente" value="${login.utente}" placeholder="Digita il nome utente">                                        
                             </div>
 
                             <div style="margin-bottom: 25px" class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                <input id="login-password" type="password" class="form-control" name="password" value="${login.password}" placeholder="digitare la password" />
+                                <input id="login-password" type="password" class="form-control" name="password" value="${login.password}" placeholder="Digita la password">
                             </div>
+
 
                             <div style="margin-top:10px" class="form-group">
                                 <!-- Button -->
 
                                 <div class="col-sm-12 controls">
-                                    <button type="submit" formAction="doLogin.jsp" id="btn-login" name="conferma"  value="Entra" class="btn btn-success">Login  </button>
+                                    <button formAction="doLogin.jsp" id="btn-login" href="#" class="btn btn-success">Entra  </button>
                                 </div>
                             </div>
 
@@ -53,19 +63,20 @@
                             <div class="form-group">
                                 <div class="col-md-12 control">
                                     <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
-                                        Non sei un'utente registrato! 
-                                        <button  formAction="viewRegistrazione.jsp" type="submit" class="btn btn-primary" name="conferma" value="Nuovo">Registrami</button> 
+                                        Non ho un account! 
+                                        <button formaction="viewRegistrazione.jsp"id="btn-fblogin" href="#"  class="btn btn-primary">Registrami</button>
                                     </div>
                                 </div>
                             </div>    
                         </form>     
+
+
+
                     </div>                     
                 </div>  
             </div>
         </div>
-        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-        <script src="bootstrap/bootstrap.min.js"></script>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     </body>
 </html>
 

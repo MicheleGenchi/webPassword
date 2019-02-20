@@ -11,7 +11,7 @@
 <jsp:useBean id="email" class="it.genchi.password.bean.EmailBean" scope="request" />
 <jsp:useBean id="login" class="it.genchi.password.bean.LoginBean" scope="session" />
 <jsp:setProperty name="login" property="*" />
-<jsp:setProperty name="email" property="*"/>
+<jsp:setProperty name="email" property="*" />
 
 <%
     login.getErrore().clear();
@@ -34,12 +34,12 @@
         }
     }
 
-    if (login.getErrore().isErr() || email.getErrore().isErr()) {
-%><jsp:forward page="viewRegistrazione.jsp" /><%
-        } else {
-            daoLogin.aggiungi(login);
-            daoEmail.aggiungi(email);
-
-%><jsp:forward page="registrazioneOK.jsp" /><%        
-}
+    if (!login.getErrore().isErr() || !email.getErrore().isErr()) {
+        daoLogin.aggiungi(login);
+        daoEmail.aggiungi(email);
+    }
 %>
+<jsp:forward page="viewRegistrazione.jsp" />
+
+
+

@@ -13,21 +13,22 @@
 <html>
     <head>
         <title>Registrazione nuovo utente</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
     </head>
     <body class="bg-dark">
-
         <%
             if (login.getErrore().isErr()) {
                 errori.setMsgs(login.getErrore().getMsgs());
         %><jsp:include page="doErrori.jsp" /><%
-                } else if (email.getErrore().isErr()) {
-                    errori.getMsgs().addAll(email.getErrore().getMsgs());
+        } else if (email.getErrore().isErr()) {
+            errori.getMsgs().addAll(email.getErrore().getMsgs());
         %><jsp:include page="doErrori.jsp" /><%
-                        }
+            }
         %>
-
 
         <div class="container">    
             <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2">                                
@@ -35,7 +36,6 @@
                     <div class="panel-heading bg-info">
                         <div class="panel-title">Registrazione nuovo utente</div>
                     </div>  
-
 
                     <div style="padding-top:30px" class="panel-body" >
                         <form id="loginform" class="form-horizontal" role="form" action="doRegistrazione.jsp">
@@ -67,6 +67,12 @@
                 </div>  
             </div>
         </div>
+        <script  src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js" ></script>
+        <script type="text/javascript">
+            $("#btn-registrati").click(function () {
+                swal("Congrats!", "Your account is created!", "success");
+            });
+        </script>
     </body>
 </html>
 

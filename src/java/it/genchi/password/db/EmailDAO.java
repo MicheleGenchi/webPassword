@@ -43,7 +43,7 @@ public class EmailDAO extends DAOClass {
     }
 
     @Override
-    public boolean fill(ListaBean lista, String... stringa) {
+    public boolean fill(ListaBean lista, String...stringa) {
 
         boolean valid = false;
         String sql = "SELECT email, password, utente FROM email where utente=? order by email;";
