@@ -13,7 +13,16 @@
 <jsp:useBean id="loginreg" class="it.genchi.password.bean.LoginBean" scope="request" />
 <jsp:setProperty name="loginreg" property="*" />
 <jsp:setProperty name="email" property="*" />
-
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js" ></script>
+<script>
+    function alertRegistrato() {
+        var registrato =<%=request.getParameter("registrato")%>;
+        swal("Congratulazioni!", registarto, "success");
+        $("#btn-registrati").html("Entra " + registrato);
+        $("#loginform").attr('action', 'doTipo.jsp');
+    };
+</script> 
 <%
     LoginDAO daoLogin = new LoginDAO();
     EmailDAO daoEmail = new EmailDAO();
@@ -33,13 +42,15 @@
         }
     }
 
-    if (!loginreg.getErrore().isErr() || !email.getErrore().isErr()) {
+    if (!loginreg.getErrore().isErr() && !email.getErrore().isErr()) {
         login = loginreg;
         daoLogin.aggiungi(login);
         daoEmail.aggiungi(email);
-    }
+%><script>alertRegistrato();</script><%
+            }
 %>
 <jsp:forward page="viewRegistrazione.jsp" />
+
 
 
 

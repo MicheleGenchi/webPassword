@@ -21,29 +21,43 @@ import java.util.logging.Logger;
 public class LoginDAO extends DAOClass {
 
     public boolean trova(String utenteLogin) {
-        return trova(utenteLogin, "");
+        String sql;
+        boolean trovato = false;
+        sql = "SELECT count(*) FROM password2.login "
+                + "where utente=? order by utente;";
+        try (
+                Connection conn = DBConnect.get();
+                PreparedStatement st = conn.prepareStatement(sql)) {
+            st.setString(1, utenteLogin);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                trovato = (rs.getInt(1) > 0);
+            }
+            st.close();
+            conn.close();
+        } catch (Exception ex) {
+            errore.aggiungi(Errors.LoginFallito);
+            Logger.getLogger(LoginDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException("Database error in " + this.getClass().getSimpleName());
+        } finally {
+            return trovato;
+        }
     }
-    
+
     public boolean trova(String utenteLogin, String password) {
         String sql;
         boolean trovato = false;
-        if (!password.isEmpty()) {
         sql = "SELECT count(*) FROM password2.login "
                 + "where utente=? and password=? order by utente;";
-        } else {
-            sql = "SELECT count(*) FROM password2.login "
-                + "where utente=? order by utente;";
-        }
-        
         try (
-            Connection conn = DBConnect.get();
-            PreparedStatement st = conn.prepareStatement(sql)) {
+                Connection conn = DBConnect.get();
+                PreparedStatement st = conn.prepareStatement(sql)) {
             st.setString(1, utenteLogin);
-            if (!password.isEmpty()) 
-                st.setString(2, password);
+            st.setString(2, password);
             ResultSet rs = st.executeQuery();
-            if (rs.next())
-                trovato = (rs.getInt(1)>0);
+            if (rs.next()) {
+                trovato = (rs.getInt(1) > 0);
+            }
             st.close();
             conn.close();
         } catch (Exception ex) {

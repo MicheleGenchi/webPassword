@@ -23,7 +23,7 @@ public class EmailDAO extends DAOClass {
 
     public boolean trova(String email) {
         boolean trovata = false;
-        String sql = "SELECT count(*) FROM email where email=?";
+        String sql = "SELECT count(*) FROM email where email=? order by email";
         try (
                 Connection conn = DBConnect.get();
                 PreparedStatement st = conn.prepareStatement(sql)) {

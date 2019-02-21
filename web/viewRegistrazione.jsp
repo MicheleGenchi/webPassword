@@ -17,19 +17,11 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
     </head>
+
     <body style="background-color: navy">
         <%
-            String registrato=request.getParameter("registrato");
-            if (registrato=="OK") {
-                %><script>$().ready(SJALert());</script>
-                <jsp:forward page="doTipo.jsp" />
-                <%
-            }
-                
-            
+
             if (loginreg.getErrore().isErr()) {
                 errori.setMsgs(loginreg.getErrore().getMsgs());
         %><jsp:include page="doErrori.jsp" /><%
@@ -67,7 +59,7 @@
 
                             <div style="margin-top:10px" class="form-group">                                <!-- Button -->
                                 <div class="col-sm-12 controls">
-                                    <button type="submit" action="doRegistrazione.jsp" id="btn-registrati"  name="conferma" class="btn btn-primary" value="registrati">Registrati</button>
+                                    <button type="submit" id="btn-registrati"  name="conferma" class="btn btn-primary" value="registrati">Registrati</button>
                                 </div>
                             </div>
                         </form>     
@@ -75,13 +67,6 @@
                 </div>  
             </div>
         </div>
-        <script src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js" ></script>
-        <script type = "text/javascript">
-            function SJAlert() {
-                swal("Congratulazioni!", "Ora puoi salvare le tue password!", "success");
-            }
-            ;
-        </script>
     </body>
 </html>
 
