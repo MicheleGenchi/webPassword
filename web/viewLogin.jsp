@@ -18,7 +18,7 @@
         <!-- Bootstrap core CSS -->
         <link href="/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </head>
-    <body class="bg-dark">
+    <body style="background-color: navy">
         <%
             if (login.getErrore().isErr()) {
                 errori.setMsgs(login.getErrore().getMsgs());
@@ -40,12 +40,12 @@
 
                             <div style="margin-bottom: 25px" class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                <input autofocus id="login-username" type="text" class="form-control" name="utente" value="${login.utente}" placeholder="Digita il nome utente">                                        
+                                <input autofocus id="login-username" type="text" class="form-control" name="utente" value="" placeholder="Digita il nome utente">                                        
                             </div>
 
                             <div style="margin-bottom: 25px" class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                <input id="login-password" type="password" class="form-control" name="password" value="${login.password}" placeholder="Digita la password">
+                                <input id="login-password" type="password" class="form-control" name="password" value="" placeholder="Digita la password">
                             </div>
 
 
@@ -62,7 +62,7 @@
                                 <div class="col-md-12 control">
                                     <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
                                         Non ho un account! 
-                                        <button formaction="viewRegistrazione.jsp"id="btn-fblogin" href="#"  class="btn btn-primary">Registrami</button>
+                                        <button  type="submit" formaction="viewRegistrazione.jsp" id="btn-fblogin" href="#"  class="btn btn-primary">Registrami</button>
                                     </div>
                                 </div>
                             </div>    

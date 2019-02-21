@@ -25,7 +25,7 @@
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     </head>
-    <body>
+    <body style="background-color: navy">
 
         <div class="container">
             <div class="panel panel-info">
@@ -69,7 +69,6 @@
                                         <input  type="hidden" name="utente" value="${login.utente}" />
                                         <input type="hidden" name="tipoSelezionato" value="${param.tipoSelezionato}" /></td>
                                     <td><button class="btn btn-primary">AGGIUNGI</button></td>
-                                    </th>
                                 </tr>
                             </tbody>
                         </table>
@@ -119,7 +118,7 @@
                                     <td colspan="2"><input class="form-control" type="text" name="descrizione" placeholder="nome del sito"/></td>
                                     <td colspan="2"><input class="form-control" type="text" name="utente" placeholder="utente di login"/></td>
                                     <td><input class="form-control" type="password" name="password" placeholder="password del sito"/></td>
-                                    <td rowspan="3" style="text-align:center; vertical-align: center;"><button class="btn btn-primary">AGGIUNGI</button></td>
+                                    <td rowspan="3" style="vertical-align: middle; text-align: center;"><button class="btn btn-primary">AGGIUNGI</button></td>
                                 </tr>
                                 <tr>
                                     <td colspan="5"><span class="input-group-addon">Url : </span>

@@ -10,18 +10,17 @@
 <jsp:useBean id="registration" class="it.genchi.password.bean.RegistrationBean" scope="request" />
 <jsp:useBean id="email" class="it.genchi.password.bean.EmailBean" scope="request" />
 <jsp:useBean id="login" class="it.genchi.password.bean.LoginBean" scope="session" />
-<jsp:setProperty name="login" property="*" />
+<jsp:useBean id="loginreg" class="it.genchi.password.bean.LoginBean" scope="request" />
+<jsp:setProperty name="loginreg" property="*" />
 <jsp:setProperty name="email" property="*" />
 
 <%
-    login.getErrore().clear();
-    email.getErrore().clear();
     LoginDAO daoLogin = new LoginDAO();
     EmailDAO daoEmail = new EmailDAO();
-    if (login.isValid()) {
-        boolean esiste = daoLogin.trova(login.getUtente());
+    if (loginreg.isValid()) {
+        boolean esiste = daoLogin.trova(loginreg.getUtente());
         if (esiste) {
-            login.getErrore().aggiungi(Errors.DuplicateUtente);
+            loginreg.getErrore().aggiungi(Errors.DuplicateUtente);
         } else {
             if (!email.isValid()) {
                 email.getErrore().aggiungi(Errors.InvalidEmail);
@@ -34,12 +33,15 @@
         }
     }
 
-    if (!login.getErrore().isErr() || !email.getErrore().isErr()) {
+    if (!loginreg.getErrore().isErr() || !email.getErrore().isErr()) {
+        login = loginreg;
         daoLogin.aggiungi(login);
         daoEmail.aggiungi(email);
     }
 %>
 <jsp:forward page="viewRegistrazione.jsp" />
+
+
 
 
 

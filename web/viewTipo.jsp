@@ -21,7 +21,7 @@
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
         <title>Pagina di scelta del gruppo</title>
     </head>
-    <body>
+    <body style="background-color: navy">
 
         <div class="container">  
             <div class="container">    

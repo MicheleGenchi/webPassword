@@ -5,6 +5,7 @@
 --%>
 
 <%@page import="it.genchi.password.utilita.ErrMsg"%>
+<jsp:useBean id="loginreg" class="it.genchi.password.bean.LoginBean" scope="request" />
 <jsp:useBean id="login" class="it.genchi.password.bean.LoginBean" scope="session" />
 <jsp:useBean id="email" class="it.genchi.password.bean.EmailBean" scope="request" />
 <jsp:useBean id="errori" class="it.genchi.password.utilita.ErrMsg" scope="request" />
@@ -19,17 +20,24 @@
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
     </head>
-    <body class="bg-dark">
+    <body style="background-color: navy">
         <%
-            if (login.getErrore().isErr()) {
-                errori.setMsgs(login.getErrore().getMsgs());
+            String registrato=request.getParameter("registrato");
+            if (registrato=="OK") {
+                %><script>$().ready(SJALert());</script>
+                <jsp:forward page="doTipo.jsp" />
+                <%
+            }
+                
+            
+            if (loginreg.getErrore().isErr()) {
+                errori.setMsgs(loginreg.getErrore().getMsgs());
         %><jsp:include page="doErrori.jsp" /><%
         } else if (email.getErrore().isErr()) {
             errori.getMsgs().addAll(email.getErrore().getMsgs());
         %><jsp:include page="doErrori.jsp" /><%
             }
         %>
-
         <div class="container">    
             <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2">                                
                 <div class="panel panel-info" >
@@ -41,7 +49,7 @@
                         <form id="loginform" class="form-horizontal" role="form" action="doRegistrazione.jsp">
                             <div style="margin-bottom: 25px" class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                <input id="login-username" type="text" class="form-control" name="utente" value="${login.utente}" placeholder="Digita il tuo nome" />                                        
+                                <input id="login-username" type="text" class="form-control" name="utente" value="${loginreg.utente}" placeholder="Digita il tuo nome" />                                        
                             </div>
                             <div style="margin-bottom: 25px" class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
@@ -59,7 +67,7 @@
 
                             <div style="margin-top:10px" class="form-group">                                <!-- Button -->
                                 <div class="col-sm-12 controls">
-                                    <button id="btn-registrati"  name="conferma" class="btn btn-primary" value="registrati">Registrati</button>
+                                    <button type="submit" action="doRegistrazione.jsp" id="btn-registrati"  name="conferma" class="btn btn-primary" value="registrati">Registrati</button>
                                 </div>
                             </div>
                         </form>     
@@ -67,11 +75,12 @@
                 </div>  
             </div>
         </div>
-        <script  src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js" ></script>
-        <script type="text/javascript">
-            $("#btn-registrati").click(function () {
-                swal("Congrats!", "Your account is created!", "success");
-            });
+        <script src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js" ></script>
+        <script type = "text/javascript">
+            function SJAlert() {
+                swal("Congratulazioni!", "Ora puoi salvare le tue password!", "success");
+            }
+            ;
         </script>
     </body>
 </html>

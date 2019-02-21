@@ -21,10 +21,10 @@ import java.util.logging.Logger;
 public class LoginDAO extends DAOClass {
 
     public boolean trova(String utenteLogin) {
-        return trovato(utenteLogin, "");
+        return trova(utenteLogin, "");
     }
     
-    public boolean trovato(String utenteLogin, String password) {
+    public boolean trova(String utenteLogin, String password) {
         String sql;
         boolean trovato = false;
         if (!password.isEmpty()) {
