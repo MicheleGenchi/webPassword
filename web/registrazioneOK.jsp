@@ -4,12 +4,16 @@
     Author     : JAVASE
 --%>
 
+<%@page import="it.genchi.password.db.EmailDAO"%>
+<%@page import="it.genchi.password.db.LoginDAO"%>
+<jsp:useBean id="login" class="it.genchi.password.bean.LoginBean" scope="session" />
+<jsp:useBean id="loginreg" class="it.genchi.password.bean.LoginBean" scope="request" />
+<jsp:useBean id="email" class="it.genchi.password.bean.EmailBean" scope="request" />
+
 <%
-    out.println("<p>Registrazione avvenuta con successo!!!</p>");
+    LoginDAO daoLogin = new LoginDAO();
+    EmailDAO daoEmail = new EmailDAO();
+    login = loginreg;
+    daoLogin.aggiungi(login);
+    daoEmail.aggiungi(email);
 %>
-<script  src = "//code.jquery.com/jquery-1.11.1.min.js" ></script> 
-<script  src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js" ></script>
-<script type="text/javascript">
-    //alert("prova");
-    swal("Congratulazioni!", "Ora sei un utente registrato", "success");
-</script>

@@ -4,8 +4,11 @@
     Author     : JAVASE
 --%>
 
+<%@page import="it.genchi.password.db.EmailDAO"%>
+<%@page import="it.genchi.password.db.LoginDAO"%>
 <%@page import="it.genchi.password.utilita.MsgBox"%>
 <jsp:useBean id="errori" class="it.genchi.password.utilita.ErrMsg" scope="request" />
+
 <%
     String messaggio = "";
     for (String msg : errori.getMsgs()) {
@@ -13,8 +16,7 @@
         messaggio = messaggio + "\n" + msg;
     }
     out.println("<p style=\"display:none\" id=\"messaggio\">" + messaggio + "</p>");
- %>
- 
+ %> 
     <script  src = "//code.jquery.com/jquery-1.11.1.min.js" > </script> 
     <script  src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js" > </script>
     <script>
