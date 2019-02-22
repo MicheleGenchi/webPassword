@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package it.genchi.password.db;
-
 import it.genchi.password.bean.MapTipoBean;
 import it.genchi.password.bean.TipoBean;
 import java.sql.Connection;
@@ -24,11 +23,10 @@ public class TipoDAO extends DAOClass {
         boolean valid=false;
         String sql = "SELECT DISTINCT(tipo.idTipo), tipo.descrizione "
                 + "FROM password2.tipo";
-        
-        try { 
+        try (
             Connection conn = DBConnect.get();
             PreparedStatement st = conn.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
+            ResultSet rs = st.executeQuery()) {
             while (rs.next()) {
                 TipoBean tipo=new TipoBean();
                 tipo.setIdTipo(rs.getString("idTipo"));
@@ -36,8 +34,6 @@ public class TipoDAO extends DAOClass {
                 map.aggiungi(tipo);
             }
             valid=true;
-            st.close();
-            conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(TipoDAO.class.getName()).log(Level.SEVERE, null, ex);
             throw new RuntimeException("database error in " + this.getClass().getSimpleName(), ex);

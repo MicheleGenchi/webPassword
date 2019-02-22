@@ -7,7 +7,6 @@ package it.genchi.password.db;
 
 import it.genchi.password.bean.EmailBean;
 import it.genchi.password.bean.ListaBean;
-import it.genchi.password.bean.ListaEmailBean;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -43,7 +42,7 @@ public class EmailDAO extends DAOClass {
     }
 
     @Override
-    public boolean fill(ListaBean lista, String...stringa) {
+    public boolean fill(ListaBean lista, String... stringa) {
 
         boolean valid = false;
         String sql = "SELECT email, password, utente FROM email where utente=? order by email;";
@@ -72,8 +71,9 @@ public class EmailDAO extends DAOClass {
     }
 
     public boolean aggiungi(EmailBean newEmail) {
-        String sql = "INSERT INTO email (email, password, utente) values (?,?,?)";
         boolean valid = false;
+        String sql = "INSERT INTO email (email, password, utente) values (?,?,?)";
+
         if (newEmail.isValid()) {
             try (Connection conn = DBConnect.get();
                     PreparedStatement st = conn.prepareStatement(sql)) {
@@ -82,10 +82,10 @@ public class EmailDAO extends DAOClass {
                 st.setString(3, newEmail.getUtente());
                 int nrow = st.executeUpdate();
                 valid = nrow >= 1;
-                st.close();
-                conn.close();
             } catch (SQLException ex) {
                 Logger.getLogger(EmailDAO.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                return valid;
             }
         }
         return valid;

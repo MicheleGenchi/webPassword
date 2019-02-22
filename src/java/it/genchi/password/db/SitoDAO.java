@@ -6,10 +6,8 @@
 package it.genchi.password.db;
 
 import it.genchi.password.bean.ListaBean;
+import it.genchi.password.bean.MYBean;
 import it.genchi.password.bean.SitoBean;
-import it.genchi.password.bean.TipoBean;
-import it.genchi.password.utilita.ErrMsg;
-import it.genchi.password.utilita.Errors;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,22 +19,22 @@ import java.util.logging.Logger;
  *
  * @author JAVASE
  */
-public class SitiDAO extends DAOClass {
-    
+public class SitoDAO extends DAOClass {
+
     @Override
-    public boolean fill(ListaBean lista, String...stringa) {
-        boolean valid=false;
+    public boolean fill(ListaBean lista, String... stringa) {
+        boolean valid = false;
         String sql = "SELECT idSito,descrizione,indirizzo,utente,password, "
                 + "idTipo,login FROM password2.sito where login=? and idTipo=? order by descrizione;";
 
-        try { 
+        try {
             Connection conn = DBConnect.get();
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, stringa[0]); //utente
             st.setString(2, stringa[1]); //idTipo
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                SitoBean sito=new SitoBean();
+                SitoBean sito = new SitoBean();
                 sito.setIdSito(rs.getInt("idSito"));
                 sito.setDescrizione(rs.getString("descrizione"));
                 sito.setIndirizzo(rs.getString("indirizzo"));
@@ -46,14 +44,36 @@ public class SitiDAO extends DAOClass {
                 sito.setLogin(rs.getString("login"));
                 lista.aggiungi(sito);
             }
-            valid=true;
-            st.close();
-            conn.close();
-            } catch (SQLException ex) {
+            valid = true;
+            rs.close();
+        } catch (SQLException ex) {
             Logger.getLogger(TipoDAO.class.getName()).log(Level.SEVERE, null, ex);
             throw new RuntimeException("database error in " + this.getClass().getSimpleName(), ex);
         } finally {
             return valid;
         }
+    }
+
+    public boolean aggiungi(SitoBean newSito) {
+        boolean valid = false;
+        String sql = "INSERT INTO password2.sito (descrizione, indirizzo, utente, password, idTipo, Login) values (?,?,?,?,?,?)";
+        if (newSito.isValid()) {
+            try (Connection conn = DBConnect.get();
+                    PreparedStatement st = conn.prepareStatement(sql)) {
+                st.setString(1, newSito.getDescrizione());
+                st.setString(2, newSito.getIndirizzo());
+                st.setString(3, newSito.getUtente());
+                st.setString(4, newSito.getPassword());
+                st.setString(5, newSito.getIdTipo());
+                st.setString(6, newSito.getLogin());
+                int nrow = st.executeUpdate();
+                valid = nrow >= 1;
+            } catch (SQLException ex) {
+                Logger.getLogger(EmailDAO.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                return valid;
+            }
+        }
+        return valid;
     }
 }

@@ -6,9 +6,7 @@
 
 <%@page import="it.genchi.password.utilita.Errors"%>
 <%@page import="it.genchi.password.db.EmailDAO"%>
-<%@page import="it.genchi.password.utilita.MsgBox"%>
 <jsp:useBean id="email" class="it.genchi.password.bean.EmailBean" scope="request" />
-<jsp:useBean id="tipi" class="it.genchi.password.bean.MapTipoBean" scope="session" />
 <jsp:setProperty name="email" property="*" />
 
 <%

@@ -27,4 +27,9 @@ public class MYBean  {
     public ErrMsg getErrore() {
         return this.errore;
     }
+    
+    public boolean isValid() {
+        boolean valid=false;
+        return valid;
+    }
 }

@@ -54,7 +54,7 @@ public class EmailBean extends MYBean {
     }
 
 
-    
+    @Override
     public boolean isValid() {
         Matcher matcher = emailPattern.matcher(email);
         if (email.isEmpty())

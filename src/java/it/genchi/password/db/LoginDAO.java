@@ -6,6 +6,7 @@
 package it.genchi.password.db;
 
 import it.genchi.password.bean.LoginBean;
+import it.genchi.password.bean.MYBean;
 import it.genchi.password.utilita.Errors;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -69,24 +70,27 @@ public class LoginDAO extends DAOClass {
         }
     }
 
-    public boolean aggiungi(LoginBean login) {
-        String sql = "INSERT INTO login (utente, password) values (?,?)";
+    public boolean aggiungi(LoginBean newLogin) {
         boolean valid = false;
-        try {
-            Connection conn = DBConnect.get();
-            PreparedStatement st;
-            st = conn.prepareStatement(sql);
-            st.setString(1, login.getUtente());
-            st.setString(2, login.getPassword());
-            int row = st.executeUpdate();
-            valid = row >= 1;
-            st.close();
-            conn.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(EmailDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            return valid;
+        String sql = "INSERT INTO login (utente, password) values (?,?)";
+        if (newLogin.isValid()) {
+            try {
+                Connection conn = DBConnect.get();
+                PreparedStatement st;
+                st = conn.prepareStatement(sql);
+                st.setString(1, newLogin.getUtente());
+                st.setString(2, newLogin.getPassword());
+                int row = st.executeUpdate();
+                valid = row >= 1;
+                st.close();
+                conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(EmailDAO.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                return valid;
+            }
         }
+        return valid;
     }
 
 }

@@ -7,7 +7,6 @@
 <%@page import="java.util.Map.Entry"%>
 <%@page import="it.genchi.password.bean.TipoBean"%>
 <%@page import="java.util.Formatter"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="login" class="it.genchi.password.bean.LoginBean" scope="session" />
 <jsp:useBean id="tipi" class="it.genchi.password.bean.MapTipoBean" scope="session" />
 <jsp:setProperty name="login" property="*" />

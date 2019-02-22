@@ -84,5 +84,8 @@ public class SitoBean extends MYBean {
         this.login = login;
     }
    
-   
+    @Override
+    public boolean isValid() {
+        return true;
+    }
 }
