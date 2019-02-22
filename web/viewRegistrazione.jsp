@@ -39,8 +39,6 @@
         %>
 
     <body onload="<%= onload_string %>" style="background-color: navy">
-
-
         <div class="container">    
             <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2">                                
                 <div class="panel panel-info" >
