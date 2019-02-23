@@ -10,6 +10,8 @@
 <jsp:setProperty name="sito" property="*" />
 
 <%
+    String idTipo=request.getParameter("tipoSelezionato");
+    sito.setIdTipo(idTipo);
     SitoDAO daoSito=new SitoDAO();
     if (!daoSito.aggiungi(sito))
         sito.getErrore().aggiungi(Errors.InsertFailure);

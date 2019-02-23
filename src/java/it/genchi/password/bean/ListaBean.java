@@ -11,6 +11,7 @@ import java.util.List;
 /**
  *
  * @author JAVASE
+ * @param <e>
  */
 public class ListaBean<e> {
 

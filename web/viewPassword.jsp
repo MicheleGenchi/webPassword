@@ -123,7 +123,7 @@
                                 <tr>
                                     <td colspan="5"><span class="input-group-addon">Url : </span>
                                         <input  class="form-control" type="text"  name="indirizzo" placeholder="home page del sito web" />
-                                        <input type="hidden" name="idTipo" value="${param.tipoSelezionato}"/>
+                                        <input type="hidden" name="tipoSelezionato" value="${param.tipoSelezionato}"/>
                                         <input type="hidden" name="login" value="${login.utente}"/></td>
                                 </tr>
                             </tbody>

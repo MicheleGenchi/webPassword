@@ -60,6 +60,7 @@ public class EmailDAO extends DAOClass {
                 lista.aggiungi(email);
             }
             valid = true;
+            rs.close();
             st.close();
             conn.close();
         } catch (SQLException ex) {

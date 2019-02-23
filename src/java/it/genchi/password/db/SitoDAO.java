@@ -28,9 +28,9 @@ public class SitoDAO extends DAOClass {
                 + "idTipo,login FROM password2.sito where login=? and idTipo=? order by descrizione;";
         String utente=stringa[0];
         String idTipo=stringa[1];
-        try (
+        try {
             Connection conn = DBConnect.get();
-            PreparedStatement st = conn.prepareStatement(sql)) {
+            PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, utente); //utente
             st.setString(2, idTipo); //idTipo
             ResultSet rs = st.executeQuery();
@@ -47,6 +47,8 @@ public class SitoDAO extends DAOClass {
             }
             valid = true;
             rs.close();
+            st.close();
+            conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(TipoDAO.class.getName()).log(Level.SEVERE, null, ex);
             throw new RuntimeException("database error in " + this.getClass().getSimpleName(), ex);
