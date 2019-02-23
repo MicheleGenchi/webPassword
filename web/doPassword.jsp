@@ -10,7 +10,6 @@
 <jsp:useBean id="login" class="it.genchi.password.bean.LoginBean" scope="session" />
 <jsp:useBean id="listaEmail" class="it.genchi.password.bean.ListaEmailBean" scope="request" />
 <jsp:useBean id="listaSiti" class="it.genchi.password.bean.ListaSitiBean" scope="request" />
-<jsp:useBean id="tipi" class="it.genchi.password.bean.MapTipoBean" scope="session" />
 
 <%
     String tipo=request.getParameter("tipoSelezionato");

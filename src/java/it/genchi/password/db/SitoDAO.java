@@ -26,12 +26,13 @@ public class SitoDAO extends DAOClass {
         boolean valid = false;
         String sql = "SELECT idSito,descrizione,indirizzo,utente,password, "
                 + "idTipo,login FROM password2.sito where login=? and idTipo=? order by descrizione;";
-
-        try {
+        String utente=stringa[0];
+        String idTipo=stringa[1];
+        try (
             Connection conn = DBConnect.get();
-            PreparedStatement st = conn.prepareStatement(sql);
-            st.setString(1, stringa[0]); //utente
-            st.setString(2, stringa[1]); //idTipo
+            PreparedStatement st = conn.prepareStatement(sql)) {
+            st.setString(1, utente); //utente
+            st.setString(2, idTipo); //idTipo
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 SitoBean sito = new SitoBean();
@@ -56,7 +57,8 @@ public class SitoDAO extends DAOClass {
 
     public boolean aggiungi(SitoBean newSito) {
         boolean valid = false;
-        String sql = "INSERT INTO password2.sito (descrizione, indirizzo, utente, password, idTipo, Login) values (?,?,?,?,?,?)";
+        String sql = "INSERT INTO sito (descrizione, indirizzo, utente, password, idTipo, Login)"
+                + "values (?,?,?,?,?,?)";
         if (newSito.isValid()) {
             try (Connection conn = DBConnect.get();
                     PreparedStatement st = conn.prepareStatement(sql)) {

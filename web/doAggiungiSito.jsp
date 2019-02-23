@@ -14,4 +14,4 @@
     if (!daoSito.aggiungi(sito))
         sito.getErrore().aggiungi(Errors.InsertFailure);
 %>
-<jsp:forward page="doPassword.jsp"/>;
+<jsp:forward page="doPassword.jsp"/>
