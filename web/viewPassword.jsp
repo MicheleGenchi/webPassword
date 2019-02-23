@@ -67,7 +67,7 @@
                                         <input class="form-control" type="text" name="email" placeholder="digita l'email"/></th>
                                     <td><input class="form-control" type="password" name="ePassword" placeholder="digita la password associata"/>
                                         <input  type="hidden" name="utente" value="${login.utente}" />
-                                        <input type="hidden" name="tipoSelezionato" value="${param.tipoSelezionato}" /></td>
+                                        <input  type="hidden" name="tipoSelezionato" value="${param.tipoSelezionato}" />
                                     <td><button class="btn btn-primary">AGGIUNGI</button></td>
                                 </tr>
                             </tbody>
@@ -132,5 +132,27 @@
                 </form>
             </div>
         </div>    
+        <script  src = "//code.jquery.com/jquery-1.11.1.min.js" ></script> 
+        <script  src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js" ></script>
+        <script>
+            $('.confim-delete').onclick(function () {
+                swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then(function () {
+                    swal(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                            );
+                });
+            });
+
+        </script>
     </body>
 </html>

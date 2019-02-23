@@ -4,14 +4,13 @@
     Author     : JAVASE
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Elimina email</title>
-    </head>
-    <body>
-        <h1>Pagina in costruzione</h1>
-    </body>
-</html>
+<%@page import="it.genchi.password.db.EmailDAO"%>
+<jsp:useBean id="email" class="it.genchi.password.bean.EmailBean" scope="request" />
+
+<%
+    String emailDaEliminare=request.getParameter("email");
+    EmailDAO daoEmail=new EmailDAO();
+    if (!daoEmail.elimina(emailDaEliminare))
+        email.getErrore().aggiungi("Non sono riuscito ad eliminare l'email");
+%>
+<jsp:forward page="doPassword.jsp"/>
