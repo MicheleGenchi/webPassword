@@ -39,7 +39,7 @@
                                 <tr style="background-color: darkgray">
                                     <th scope="col" data-column-id="email" data-order="email">EMAIL</th>
                                     <th scope="col" data-column-id="password">PASSWORD</th>
-                                    <th scope="col" class="comandi">COMANDI</th>
+                                    <th scope="col">COMANDI</th>
                                 </tr>
                             </thead>
 
@@ -54,23 +54,27 @@
                                         out.print(e.getePassword());
                                         out.print("</td>");
                                         out.print("<td>");
-                                        out.print("<a href=\"viewModificaEmail.jsp?email=" + e.getEmail() + "\"> Modifica</a>");
-                                        out.print(" - <a href=\"doEliminaEmail.jsp?email=" + e.getEmail() + "\"> Elimina</a>");
+                                        String tipo = request.getParameter("tipoSelezionato");
+                                        out.print("<a href=\"viewModificaEmail.jsp?tipoSelezionato="
+                                                + tipo + "&email=" + e.getEmail() + "\"> Modifica </a>");
+                                        String emailDeleteLink = "doEliminaEmail.jsp?tipoSelezionato=" + tipo + "&email=" + e.getEmail();
+                                        String prova="#";
+                                        out.print(" - <a id='delLinkEmail' href='" + prova + "' onClick='confermaDelete()'> Elimina </a>");
                                         out.print("</td>");
                                         out.print("</th>");
                                         out.print("</tr>");
                                     }
                                 %>
-
-                                <tr>
-                                    <th scope="row">
-                                        <input class="form-control" type="text" name="email" placeholder="digita l'email"/></th>
-                                    <td><input class="form-control" type="password" name="ePassword" placeholder="digita la password associata"/>
-                                        <input  type="hidden" name="utente" value="${login.utente}" />
-                                        <input  type="hidden" name="tipoSelezionato" value="${param.tipoSelezionato}" />
-                                    <td><button class="btn btn-primary">AGGIUNGI</button></td>
-                                </tr>
                             </tbody>
+                            <tfoot>
+                            <th scope="row">
+                                <input class="form-control" type="text" name="email" placeholder="digita l'email"/></th>
+                            <td><input class="form-control" type="password" name="ePassword" placeholder="digita la password associata"/>
+                                <input  type="hidden" name="utente" value="${login.utente}" />
+                                <input  type="hidden" name="tipoSelezionato" value="${param.tipoSelezionato}" />
+                            <td><button class="btn btn-primary">AGGIUNGI</button></td>
+                            </tfoot>
+
                         </table>
                     </div>
                 </form>
@@ -99,6 +103,7 @@
                             </thead>
                             <tbody>
                                 <% //creazione tabella
+
                                     for (SitoBean s : listaSiti.getLista()) {
                                         out.print("<tr>");
                                         out.print("<th scope=\"row\">" + s.getIdSito() + "</th>");
@@ -114,7 +119,9 @@
                                         }
                                     }
                                 %>
-                                <tr>     
+                            </tbody>
+                            <tfoot>     
+                                <tr>
                                     <td colspan="2"><input class="form-control" type="text" name="descrizione" placeholder="nome del sito"/></td>
                                     <td colspan="2"><input class="form-control" type="text" name="utente" placeholder="utente di login"/></td>
                                     <td><input class="form-control" type="password" name="password" placeholder="password del sito"/></td>
@@ -126,7 +133,8 @@
                                         <input type="hidden" name="tipoSelezionato" value="${param.tipoSelezionato}"/>
                                         <input type="hidden" name="login" value="${login.utente}"/></td>
                                 </tr>
-                            </tbody>
+                            </tfoot>
+
                         </table>
                     </div>
                 </form>
@@ -135,24 +143,14 @@
         <script  src = "//code.jquery.com/jquery-1.11.1.min.js" ></script> 
         <script  src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js" ></script>
         <script>
-            $('.confim-delete').onclick(function () {
-                swal({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then(function () {
-                    swal(
-                            'Deleted!',
-                            'Your file has been deleted.',
-                            'success'
-                            );
-                });
-            });
-
+            function confermaDelete() {
+                var url="doEliminaEmail.jsp?tipoSelezionato=" + tipo + "&email=" + e.getEmail();
+                var conferma=confirm("prova a modificare il comportamento \n");
+                if (conferma===true)
+                    alert("l'email é stata eliminata "+url);
+                else
+                    alert("Vabbene non cancellerò l'email");
+            }
         </script>
     </body>
 </html>

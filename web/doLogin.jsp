@@ -25,7 +25,6 @@
     }
     errori.setMsgs(login.getErrore().getMsgs());
     %>
-<jsp:include page="doErrori.jsp" />
 <jsp:forward page="viewLogin.jsp" />
 
 
