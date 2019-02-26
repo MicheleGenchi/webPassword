@@ -59,7 +59,7 @@
                                                 + tipo + "&email=" + e.getEmail() + "\"> Modifica </a>");
                                         String emailDeleteLink = "doEliminaEmail.jsp?tipoSelezionato=" + tipo + "&email=" + e.getEmail();
                                         String prova="#";
-                                        out.print(" - <a id='delLinkEmail' href='" + prova + "' onClick='confermaDelete()'> Elimina </a>");
+                                        out.print(" - <a id=\"delLinkEmail\" href=\"javascript:confermaDelete()\"> Elimina </a>");
                                         out.print("</td>");
                                         out.print("</th>");
                                         out.print("</tr>");
@@ -145,9 +145,9 @@
         <script>
             function confermaDelete() {
                 var url="doEliminaEmail.jsp?tipoSelezionato=" + tipo + "&email=" + e.getEmail();
-                var conferma=confirm("prova a modificare il comportamento \n");
+                var conferma=confirm("prova a modificare il comportamento");
                 if (conferma===true)
-                    alert("l'email é stata eliminata "+url);
+                    alert("l'email é stata eliminata ");
                 else
                     alert("Vabbene non cancellerò l'email");
             }
