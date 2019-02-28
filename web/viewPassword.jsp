@@ -14,7 +14,6 @@
 <jsp:useBean id="email" class="it.genchi.password.bean.EmailBean" scope="request" />
 <jsp:useBean id="sito" class="it.genchi.password.bean.SitoBean" scope="request" />
 <jsp:useBean id="errori" class="it.genchi.password.utilita.ErrMsg" scope="request" />
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -24,6 +23,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script  src = "//code.jquery.com/jquery-1.11.1.min.js" ></script> 
+        <script  src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js" ></script>
+        <script>
+            function confermaDelete(tipo, email) {
+                var conferma = confirm("prova a modificare il comportamento");
+                if (conferma) {
+                    alert("email eliminata con successo");
+                    window.location.href="doEliminaEmail.jsp?conferma="+conferma+"&tipo="+tipo+"&email="+email;
+                }
+            }
+        </script>
     </head>
     <body style="background-color: navy">
 
@@ -55,13 +65,9 @@
                                         out.print("</td>");
                                         out.print("<td>");
                                         String tipo = request.getParameter("tipoSelezionato");
-                                        out.print("<a href=\"viewModificaEmail.jsp?tipoSelezionato="
-                                                + tipo + "&email=" + e.getEmail() + "\"> Modifica </a>");
-                                        String emailDeleteLink = "doEliminaEmail.jsp?tipoSelezionato=" + tipo + "&email=" + e.getEmail();
-                                        String prova="#";
-                                        out.print(" - <a id=\"delLinkEmail\" href=\"javascript:confermaDelete()\"> Elimina </a>");
+                                        out.print("<a href=\"viewModificaEmail.jsp?tipoSelezionato=" + tipo + "&email=" + e.getEmail() + "\"> Modifica </a>");
+                                        out.print("<a href=\"javascript:confermaDelete('"+tipo+"','"+e.getEmail()+"')\"> - Elimina </a>");
                                         out.print("</td>");
-                                        out.print("</th>");
                                         out.print("</tr>");
                                     }
                                 %>
@@ -72,9 +78,8 @@
                             <td><input class="form-control" type="password" name="ePassword" placeholder="digita la password associata"/>
                                 <input  type="hidden" name="utente" value="${login.utente}" />
                                 <input  type="hidden" name="tipoSelezionato" value="${param.tipoSelezionato}" />
-                            <td><button class="btn btn-primary">AGGIUNGI</button></td>
+                                <button class="btn btn-primary">AGGIUNGI</button></td>
                             </tfoot>
-
                         </table>
                     </div>
                 </form>
@@ -140,17 +145,5 @@
                 </form>
             </div>
         </div>    
-        <script  src = "//code.jquery.com/jquery-1.11.1.min.js" ></script> 
-        <script  src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js" ></script>
-        <script>
-            function confermaDelete() {
-                var url="doEliminaEmail.jsp?tipoSelezionato=" + tipo + "&email=" + e.getEmail();
-                var conferma=confirm("prova a modificare il comportamento");
-                if (conferma===true)
-                    alert("l'email é stata eliminata ");
-                else
-                    alert("Vabbene non cancellerò l'email");
-            }
-        </script>
     </body>
 </html>

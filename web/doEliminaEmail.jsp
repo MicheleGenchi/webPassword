@@ -9,10 +9,16 @@
 <jsp:setProperty name="email" property="*" />
 
 <%
-    String tipo=request.getParameter("tipoSelezionato");
-    String emailDaEliminare=request.getParameter("email");
-    EmailDAO dao=new EmailDAO();
-    if (!dao.elimina(emailDaEliminare))
-        email.getErrore().aggiungi(Errors.InsertFailure);
+    Boolean conferma = (Boolean) Boolean.parseBoolean(request.getParameter("conferma"));
+    String tipo = request.getParameter("tipoSelezionato");
+    String emailDaEliminare = request.getParameter("email");
+    if (conferma) {
+        EmailDAO dao = new EmailDAO();
+        if (!dao.elimina(emailDaEliminare)) {
+            email.getErrore().aggiungi(Errors.InsertFailure);
+        }
+    }
 %>
-<jsp:forward page="doPassword.jsp"/>
+<jsp:forward page="doPassword.jsp">
+    <jsp:param name="tipoSelezionato" value="${param.tipoSelezionato}"  />
+</jsp:forward>
