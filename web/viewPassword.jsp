@@ -24,7 +24,9 @@
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     </head>
     <body style="background-image: ">
-
+        <div class="panel panel-heading"> 
+            <center><h2 style="vertical-align: middle"><span><a href="viewLogin.jsp"><img src="home.png" /></a></span> ARCHIVIO DELLE MIE PASSWORD  </h2></center>
+        </div>
         <div class="container">
             <div class="panel panel-info">
                 <div class="panel-heading bg-info">
