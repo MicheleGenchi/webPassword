@@ -142,23 +142,22 @@
         <script  src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js" ></script>
         <script>
             function confermaDelete(descrizione, link, tipo, email) {
-                var myLink=link;
-                var myTipo=tipo;
-                var myEmail=email;
+                var myLink = link;
+                var myTipo = tipo;
+                var myEmail = email;
                 swal({
-                    title: 'Conferma',
-                    text: "Sei sicuro di voler cancellare ?",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Cancella'
-                }).then(function (isConfirm) {
-                    
-                    window.location.href = link + "?conferma=" + isConfirm + "&tipo=" + myTipo + "&email=" + myEmail;
-
+                title: 'Conferma cancellazione',
+                        text: 'Sei sicuro di voler cancellare ?',
+                        icon: 'warning',
+                        buttons: true,
+                        dangerMode: true,
+                }).then((willDelete) => {
+                    if (willDelete)
+                    window.location.href = link + "?conferma=" + willDelete + "&tipo=" + myTipo + "&email=" + myEmail;
                 });
-            };
+
+            }
+            ;
         </script>
     </body>
 </html>
