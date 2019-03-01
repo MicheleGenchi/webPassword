@@ -80,4 +80,20 @@ public class SitoDAO extends DAOClass {
         }
         return valid;
     }
+    
+        public boolean elimina(Integer sitoToSearch) {
+        boolean isDeleted = false;
+        String sql = "delete from sito where idSito=?";
+        try (
+                Connection conn = DBConnect.get();
+                PreparedStatement st = conn.prepareStatement(sql)) {
+            st.setInt(1, sitoToSearch);
+            int n = st.executeUpdate();
+            isDeleted = (n >= 1);
+        } catch (SQLException ex) {
+            Logger.getLogger(EmailDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            return isDeleted;
+        }
+    }
 }

@@ -142,10 +142,10 @@
         <script  src = "//code.jquery.com/jquery-1.11.1.min.js" ></script> 
         <script  src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js" ></script>
         <script>
-            function confermaDelete(descrizione, link, tipo, email) {
+            function confermaDelete(descrizione, link, tipo, any) {
                 var myLink = link;
                 var myTipo = tipo;
-                var myEmail = email;
+                var myAny = any; // chiave primaria di eliminazione es. email=email, sito=idSito
                 swal({
                     title: 'Conferma cancellazione',
                     text: 'Sei sicuro di voler cancellare ?',
@@ -154,7 +154,7 @@
                     dangerMode: true,
                 }).then((willDelete) => {
                     if (willDelete)
-                        window.location.href = link + "?conferma=" + willDelete + "&tipoSelezionato=" + myTipo + "&email=" + myEmail;
+                        window.location.href = link + "?conferma=" + willDelete + "&tipoSelezionato=" + myTipo + "&any=" + myAny;
                 });
 
             }
