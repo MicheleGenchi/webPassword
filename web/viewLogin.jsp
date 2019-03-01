@@ -28,7 +28,6 @@
                 <div class="panel panel-info" >
                     <div class="panel-heading">
                         <div class="panel-title">Accesso al programma</div>
-                        <div style="float:right; font-size: 80%; position: relative; top:-10px"></div>
                     </div>     
 
                     <div style="padding-top:30px" class="panel-body" >

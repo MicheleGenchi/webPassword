@@ -21,8 +21,9 @@
         <title>Pagina di visualizzazione delle password</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     </head>
-    <body style="background-color: navy">
+    <body style="background-image: ">
 
         <div class="container">
             <div class="panel panel-info">
@@ -105,14 +106,15 @@
                                         out.print("<td colspan=\"2\">" + s.getDescrizione() + "</td>");
                                         out.print("<td>" + s.getUtente() + "</td>");
                                         out.print("<td>" + s.getPassword() + "</td>");
+                                        out.print("<td>");
                                         String tipo = request.getParameter("tipoSelezionato");
                                         out.print("<a href=\"viewModificaSito.jsp?tipoSelezionato=" + tipo + "&sito=" + s.getIdSito() + "\"> Modifica </a>");
                                         String link = "doEliminaSito.jsp";
                                         out.print("- <a href=\"javascript:confermaDelete('questo idSito : ','" + link + "','" + tipo + "','" + s.getIdSito() + "')\"> Elimina </a>");
+                                        out.print("</td>");
+                                        out.print("</tr>");
                                         if (!s.getIndirizzo().isEmpty()) {
-                                            out.print("</tr>");
-                                            out.print("<tr class=\"intestazione\"><td colspan=\"5\">Indirizzo : " + s.getIndirizzo() + "</td>");
-                                            out.print("</tr>");
+                                            out.print("<th class=\"intestazione\"><td colspan=\"5\">Indirizzo : " + s.getIndirizzo() + "</td></th>");
                                         }
                                     }
                                 %>
@@ -137,7 +139,6 @@
                 </form>
             </div>
         </div>    
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script  src = "//code.jquery.com/jquery-1.11.1.min.js" ></script> 
         <script  src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js" ></script>
         <script>
@@ -146,14 +147,14 @@
                 var myTipo = tipo;
                 var myEmail = email;
                 swal({
-                title: 'Conferma cancellazione',
-                        text: 'Sei sicuro di voler cancellare ?',
-                        icon: 'warning',
-                        buttons: true,
-                        dangerMode: true,
+                    title: 'Conferma cancellazione',
+                    text: 'Sei sicuro di voler cancellare ?',
+                    icon: 'warning',
+                    buttons: true,
+                    dangerMode: true,
                 }).then((willDelete) => {
                     if (willDelete)
-                    window.location.href = link + "?conferma=" + willDelete + "&tipo=" + myTipo + "&email=" + myEmail;
+                        window.location.href = link + "?conferma=" + willDelete + "&tipoSelezionato=" + myTipo + "&email=" + myEmail;
                 });
 
             }
