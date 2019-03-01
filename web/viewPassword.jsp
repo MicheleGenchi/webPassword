@@ -21,19 +21,6 @@
         <title>Pagina di visualizzazione delle password</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-        <script  src = "//code.jquery.com/jquery-1.11.1.min.js" ></script> 
-        <script  src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js" ></script>
-        <script>
-            function confermaDelete(tipo, email) {
-                var conferma = confirm("prova a modificare il comportamento");
-                if (conferma) {
-                    alert("email eliminata con successo");
-                    window.location.href="doEliminaEmail.jsp?conferma="+conferma+"&tipo="+tipo+"&email="+email;
-                }
-            }
-        </script>
     </head>
     <body style="background-color: navy">
 
@@ -66,19 +53,22 @@
                                         out.print("<td>");
                                         String tipo = request.getParameter("tipoSelezionato");
                                         out.print("<a href=\"viewModificaEmail.jsp?tipoSelezionato=" + tipo + "&email=" + e.getEmail() + "\"> Modifica </a>");
-                                        out.print("<a href=\"javascript:confermaDelete('"+tipo+"','"+e.getEmail()+"')\"> - Elimina </a>");
+                                        String link = "doEliminaEmail.jsp";
+                                        out.print(" - <a href=\"javascript:confermaDelete('questa email : ','" + link + "','" + tipo + "','" + e.getEmail() + "')\"> Elimina </a>");
                                         out.print("</td>");
                                         out.print("</tr>");
                                     }
                                 %>
                             </tbody>
                             <tfoot>
-                            <th scope="row">
-                                <input class="form-control" type="text" name="email" placeholder="digita l'email"/></th>
-                            <td><input class="form-control" type="password" name="ePassword" placeholder="digita la password associata"/>
-                                <input  type="hidden" name="utente" value="${login.utente}" />
-                                <input  type="hidden" name="tipoSelezionato" value="${param.tipoSelezionato}" />
-                                <button class="btn btn-primary">AGGIUNGI</button></td>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-control" type="text" name="email" placeholder="digita l'email"/></th>
+                                    <td><input class="form-control" type="password" name="ePassword" placeholder="digita la password associata"/>
+                                        <input  type="hidden" name="utente" value="${login.utente}" />
+                                        <input  type="hidden" name="tipoSelezionato" value="${param.tipoSelezionato}" /></td>
+                                    <td><button class="btn btn-primary">AGGIUNGI</button></td>
+                                </tr>
                             </tfoot>
                         </table>
                     </div>
@@ -115,8 +105,10 @@
                                         out.print("<td colspan=\"2\">" + s.getDescrizione() + "</td>");
                                         out.print("<td>" + s.getUtente() + "</td>");
                                         out.print("<td>" + s.getPassword() + "</td>");
-                                        out.print("<td class=\"indirizzo\"><a href=\"viewModificaSito.jsp?idSito=" + s.getIdSito() + "\"> Modifica</a>");
-                                        out.print(" - <a href=\"doEliminaSito.jsp?idSito=" + s.getIdSito() + "\"> Elimina</a></td>");
+                                        String tipo = request.getParameter("tipoSelezionato");
+                                        out.print("<a href=\"viewModificaSito.jsp?tipoSelezionato=" + tipo + "&sito=" + s.getIdSito() + "\"> Modifica </a>");
+                                        String link = "doEliminaSito.jsp";
+                                        out.print("- <a href=\"javascript:confermaDelete('questo idSito : ','" + link + "','" + tipo + "','" + s.getIdSito() + "')\"> Elimina </a>");
                                         if (!s.getIndirizzo().isEmpty()) {
                                             out.print("</tr>");
                                             out.print("<tr class=\"intestazione\"><td colspan=\"5\">Indirizzo : " + s.getIndirizzo() + "</td>");
@@ -145,5 +137,28 @@
                 </form>
             </div>
         </div>    
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script  src = "//code.jquery.com/jquery-1.11.1.min.js" ></script> 
+        <script  src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js" ></script>
+        <script>
+            function confermaDelete(descrizione, link, tipo, email) {
+                var myLink=link;
+                var myTipo=tipo;
+                var myEmail=email;
+                swal({
+                    title: 'Conferma',
+                    text: "Sei sicuro di voler cancellare ?",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Cancella'
+                }).then(function (isConfirm) {
+                    
+                    window.location.href = link + "?conferma=" + isConfirm + "&tipo=" + myTipo + "&email=" + myEmail;
+
+                });
+            };
+        </script>
     </body>
 </html>
