@@ -6,7 +6,6 @@
 package it.genchi.password.db;
 
 import it.genchi.password.bean.ListaBean;
-import it.genchi.password.bean.MYBean;
 import it.genchi.password.bean.SitoBean;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
