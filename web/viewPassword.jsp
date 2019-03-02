@@ -151,42 +151,42 @@
         <script  src = "//code.jquery.com/jquery-1.11.1.min.js" ></script> 
         <script  src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js" ></script>
         <script>
-                                        function confermaDelete(descrizione, link, tipo, any) {
-                                            var desc = descrizione;
-                                            var myLink = link;
-                                            var myTipo = tipo;
-                                            var myAny = any; // chiave primaria di eliminazione es. email=email, sito=idSito
-                                            swal({
-                                                title: 'Conferma cancellazione',
-                                                text: 'Sei sicuro di voler cancellare ' + desc,
-                                                icon: 'warning',
-                                                buttons: true,
-                                                dangerMode: true,
-                                            }).then((willDelete) => {
-                                                if (willDelete)
-                                                    window.location.href = link + "?conferma=" + willDelete + "&tipoSelezionato=" + myTipo + "&any=" + myAny;
-                                            });
-                                        }
-                                        ;
+            function confermaDelete(descrizione, link, tipo, any) {
+                var desc = descrizione;
+                var myLink = link;
+                var myTipo = tipo;
+                var myAny = any; // chiave primaria di eliminazione es. email=email, sito=idSito
+                swal({
+                    title: 'Conferma cancellazione',
+                    text: 'Sei sicuro di voler cancellare ' + desc,
+                    icon: 'warning',
+                    buttons: true,
+                    dangerMode: true,
+                }).then((willDelete) => {
+                    if (willDelete)
+                        window.location.href = link + "?conferma=" + willDelete + "&tipoSelezionato=" + myTipo + "&any=" + myAny;
+                });
+            }
+            ;
 
-                                        function resetEmailForm() {
-                                            $("#annullaModificaEmail").hide();
-                                            $("#idEmail").attr('value', "");
-                                            $("#temail").attr('value', "");
-                                            $("#tpassword").attr('value', "");
-                                            $('#tnewEmail').text("Aggiungi");
-                                            $("#formEmail").attr('action', 'doAggiungiEmail.jsp');
-                                        }
+            function resetEmailForm() {
+                $("#annullaModificaEmail").hide();
+                $("#idEmail").attr('value', "");
+                $("#temail").attr('value', "");
+                $("#tpassword").attr('value', "");
+                $('#tnewEmail').text("Aggiungi");
+                $("#formEmail").attr('action', 'doAggiungiEmail.jsp');
+            }
 
-                                        function modificaEmail(idEmail, oldEmail, oldPassword) {
-                                            $("#annullaModificaEmail").show();
-                                            $("#idEmail").attr('value', idEmail);
-                                            $("#temail").attr('value', oldEmail);
-                                            $("#tpassword").attr('value', oldPassword);
-                                            $('#tnewEmail').text("Modifica");
-                                            $("#formEmail").attr('action', 'doModificaEmail.jsp');
-                                        }
-                                        ;
+            function modificaEmail(idEmail, oldEmail, oldPassword) {
+                $("#annullaModificaEmail").show();
+                $("#idEmail").attr('value', idEmail);
+                $("#temail").attr('value', oldEmail);
+                $("#tpassword").attr('value', oldPassword);
+                $('#tnewEmail').text("Modifica");
+                $("#formEmail").attr('action', 'doModificaEmail.jsp');
+            }
+            ;
         </script>
     </body>
 </html>

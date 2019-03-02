@@ -18,8 +18,9 @@
                 <div style="padding-top:30px" class="panel-body" >
                     <center>
                     <img src="InCostruzione.png" alt="In costruzione" /><br />
-                    <h1>Saremo presto online, torna a trovarci!</h1>
-                    <h2><a href="javascript:history.go(-1);">Indietro</a></h2>
+                    <h1>Questa pagina deve essere sviluppata,</h1>
+                    <h3>tornate alla pagina precedente cliccando su indietro!</h3>
+                    <h2><a href="javascript:history.go(-1);"><i class="glyphicon glyphicon-hand-left"></i>Indietro</a></h2>
                     </center>
                 </div>
             </div>
