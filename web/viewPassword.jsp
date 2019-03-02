@@ -23,21 +23,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     </head>
-    <body onload="resetEmailForm()" style="background-image: ">
+    <body style="background-image: ">
+        <div class="panel panel-heading"> 
+            <center><h2 style="vertical-align: middle"><span><a href="viewLogin.jsp"><img src="home.png" /></a></span> ARCHIVIO DELLE MIE PASSWORD  </h2></center>
+        </div>
         <div class="container">
-            <div class="panel panel-heading"> 
-                <center><h2 style="vertical-align: middle"><span><a href="viewLogin.jsp"><img src="home.png" /></a></span> ARCHIVIO DELLE MIE PASSWORD  </h2></center>
-            </div>
             <div class="panel panel-info">
                 <div class="panel-heading bg-info">
                     Utente: ${login.utente.toUpperCase()}
                 </div>
-                <form id="formEmail" class="panel" action="doAggiungiEmail.jsp">
+                <form class="panel" action="doAggiungiEmail.jsp">
                     <div class="table-responsive">
                         <table class="table table-condensed table-hover">
                             <thead>
                                 <tr style="background-color: darkgray">
-                                    <th style="width:80px" scope="col" data-column-id="idEmail">ID</th>
                                     <th scope="col" data-column-id="email" data-order="email">EMAIL</th>
                                     <th scope="col" data-column-id="password">PASSWORD</th>
                                     <th scope="col">COMANDI</th>
@@ -49,20 +48,16 @@
                                     for (EmailBean e : listaEmail.getLista()) {
                                         out.print("<tr>");
                                         out.print("<th scope=\"row\">");
-                                        out.print(e.getIdEmail());
-                                        out.print("</th>");
-                                        out.print("<td>");
                                         out.print(e.getEmail());
-                                        out.print("</td>");
+                                        out.print("</th>");
                                         out.print("<td>");
                                         out.print(e.getePassword());
                                         out.print("</td>");
                                         out.print("<td>");
                                         String tipo = request.getParameter("tipoSelezionato");
-//                                        out.print("<a href=\"viewModificaEmail.jsp?tipoSelezionato=" + tipo + "&email=" + e.getEmail() + "\"> Modifica </a>");
-                                        out.print("<a id='aModificaEmail' href=\"javascript:modificaEmail('" + e.getIdEmail() + "','"+ e.getEmail() + "','" + e.getePassword() + "')\"> Modifica </a>");
+                                        out.print("<a href=\"viewModificaEmail.jsp?tipoSelezionato=" + tipo + "&email=" + e.getEmail() + "\"> Modifica </a>");
                                         String link = "doEliminaEmail.jsp";
-                                        out.print(" - <a href=\"javascript:confermaDelete('questa email : ','" + link + "','" + tipo + "','" + e.getIdEmail()+ "')\"> Elimina </a>");
+                                        out.print(" - <a href=\"javascript:confermaDelete('questa email : ','" + link + "','" + tipo + "','" + e.getEmail() + "')\"> Elimina </a>");
                                         out.print("</td>");
                                         out.print("</tr>");
                                     }
@@ -70,13 +65,12 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th colspan=2 scope="row">
-                                        <input id="idEmail" type="hidden" name="idEmail" />
-                                        <input id="temail" class="form-control" type="text" name="email" placeholder="digita l'email"/></th>
-                                    <td><input id="tpassword" class="form-control" type="password" name="ePassword" placeholder="digita la password associata"/>
+                                    <th scope="row">
+                                        <input class="form-control" type="text" name="email" placeholder="digita l'email"/></th>
+                                    <td><input class="form-control" type="password" name="ePassword" placeholder="digita la password associata"/>
                                         <input  type="hidden" name="utente" value="${login.utente}" />
                                         <input  type="hidden" name="tipoSelezionato" value="${param.tipoSelezionato}" /></td>
-                                    <td><button type="submit" id="tnewEmail" class="btn btn-primary">AGGIUNGI</button></td>
+                                    <td><button class="btn btn-primary">AGGIUNGI</button></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -150,35 +144,23 @@
         <script  src = "//code.jquery.com/jquery-1.11.1.min.js" ></script> 
         <script  src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js" ></script>
         <script>
-        function confermaDelete(descrizione, link, tipo, any) {
-            var myLink = link;
-            var myTipo = tipo;
-            var myAny = any; // chiave primaria di eliminazione es. email=email, sito=idSito
-            swal({
-                title: 'Conferma cancellazione',
-                text: 'Sei sicuro di voler cancellare ?',
-                icon: 'warning',
-                buttons: true,
-                dangerMode: true,
-            }).then((willDelete) => {
-                if (willDelete)
-                    window.location.href = link + "?conferma=" + willDelete + "&tipoSelezionato=" + myTipo + "&any=" + myAny;
-            });
-        }
-        ;
+            function confermaDelete(descrizione, link, tipo, any) {
+                var myLink = link;
+                var myTipo = tipo;
+                var myAny = any; // chiave primaria di eliminazione es. email=email, sito=idSito
+                swal({
+                    title: 'Conferma cancellazione',
+                    text: 'Sei sicuro di voler cancellare ?',
+                    icon: 'warning',
+                    buttons: true,
+                    dangerMode: true,
+                }).then((willDelete) => {
+                    if (willDelete)
+                        window.location.href = link + "?conferma=" + willDelete + "&tipoSelezionato=" + myTipo + "&any=" + myAny;
+                });
 
-        function resetEmailForm() {
-            $("#formEmail").attr('action', 'doAggiungiEmail.jsp');
-            $('#tnewEmail').text("Aggiungi");
-        }
-        
-        function modificaEmail(idEmail, oldEmail, oldPassword) {
-            $("#formEmail").attr('action', 'doModificaEmail.jsp');
-            $("#idEmail").attr('value', idEmail);
-            $("#temail").attr('value', oldEmail);
-            $("#tpassword").attr('value', oldPassword);
-            $('#tnewEmail').text("Modifica");
-        };
+            }
+            ;
         </script>
     </body>
 </html>

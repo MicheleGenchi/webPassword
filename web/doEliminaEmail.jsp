@@ -10,14 +10,15 @@
 
 <%
     Boolean conferma = (Boolean) Boolean.parseBoolean(request.getParameter("conferma"));
-    Integer emailDaEliminare = Integer.parseInt(request.getParameter("any"));
+    String tipo = request.getParameter("tipoSelezionato");
+    String emailDaEliminare = request.getParameter("any");
     if (conferma) {
         EmailDAO dao = new EmailDAO();
-        if (!dao.elimina(emailDaEliminare)) {  // idEmail
+        if (!dao.elimina(emailDaEliminare)) {
             email.getErrore().aggiungi(Errors.InsertFailure);
         }
     }
 %>
 <jsp:forward page="doPassword.jsp">
-    <jsp:param name="tipoSelezionato" value="${param.tipoSelezionato}" />
+    <jsp:param name="tipoSelezionato" value="${param.tipoSelezionato}"  />
 </jsp:forward>

@@ -68,7 +68,7 @@
 
                             <div style="margin-top:10px" class="form-group">                                <!-- Button -->
                                 <div class="col-sm-12 controls">
-                                    <button type="submit" id="btn-registrati"  name="conferma" class="btn btn-primary" value="registrati">Registrati</button>
+                                    <button onclick="checkRegistrazione()" type="submit" id="btn-registrati"  name="conferma" class="btn btn-primary" value="registrati">Registrati</button>
                                 </div>
                             </div>
                         </form>     

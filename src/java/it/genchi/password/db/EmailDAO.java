@@ -19,36 +19,14 @@ import java.util.logging.Logger;
  * @author JAVASE
  */
 public class EmailDAO extends DAOClass {
-    
-    public boolean modifica(Integer idEmail, String newEmail, String newPassword) {
-        boolean aggiornato=false;
-        String sql="UPDATE password2.email set email=?, password=? where idEmail=?"; 
-        try (
-                Connection conn = DBConnect.get();
-                PreparedStatement st = conn.prepareStatement(sql)) {
-            st.setString(1, newEmail);
-            st.setString(2, newPassword);
-            st.setInt(3, idEmail); //primary key, indice email univoco
-            int nRow = st.executeUpdate();
-            aggiornato = nRow>0;
-            st.close();
-            conn.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(TipoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new RuntimeException("database error in " + this.getClass().getSimpleName(), ex);
-        } finally {
-            return aggiornato;
-        }
-    }
-    
 
-    public boolean trova(Integer idEmail) {
+    public boolean trova(String email) {
         boolean trovata = false;
-        String sql = "SELECT count(*) FROM email where idEmail=? order by email";
+        String sql = "SELECT count(*) FROM email where email=? order by email";
         try (
                 Connection conn = DBConnect.get();
                 PreparedStatement st = conn.prepareStatement(sql)) {
-            st.setInt(1, idEmail); //primary key, indice email univoco
+            st.setString(1, email); //utente
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 trovata = (rs.getInt(1) > 0);
@@ -67,7 +45,7 @@ public class EmailDAO extends DAOClass {
     public boolean fill(ListaBean lista, String... stringa) {
 
         boolean valid = false;
-        String sql = "SELECT idEmail, email, password, utente FROM email where utente=? order by email;";
+        String sql = "SELECT email, password, utente FROM email where utente=? order by email;";
 
         try {
             Connection conn = DBConnect.get();
@@ -76,7 +54,6 @@ public class EmailDAO extends DAOClass {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 EmailBean email = new EmailBean();
-                email.setIdEmail(rs.getInt("idEmail"));
                 email.setEmail(rs.getString("email"));
                 email.setePassword(rs.getString("password"));
                 email.setUtente(rs.getString("utente"));
@@ -115,13 +92,13 @@ public class EmailDAO extends DAOClass {
         return valid;
     }
 
-    public boolean elimina(int emailToSearch) {
+    public boolean elimina(String emailToSearch) {
         boolean isDeleted = false;
-        String sql = "delete from email where idEmail=?";
+        String sql = "delete from email where email=?";
         try (
                 Connection conn = DBConnect.get();
                 PreparedStatement st = conn.prepareStatement(sql)) {
-            st.setInt(1, emailToSearch);
+            st.setString(1, emailToSearch);
             int n = st.executeUpdate();
             isDeleted = (n >= 1);
         } catch (SQLException ex) {
