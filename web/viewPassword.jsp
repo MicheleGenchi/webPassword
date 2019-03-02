@@ -59,10 +59,10 @@
                                         out.print("</td>");
                                         out.print("<td>");
                                         String tipo = request.getParameter("tipoSelezionato");
-//                                        out.print("<a href=\"viewModificaEmail.jsp?tipoSelezionato=" + tipo + "&email=" + e.getEmail() + "\"> Modifica </a>");
-                                        out.print("<a id='aModificaEmail' href=\"javascript:modificaEmail('" + e.getIdEmail() + "','"+ e.getEmail() + "','" + e.getePassword() + "')\"> Modifica </a>");
+//                                      out.print("<a href=\"viewModificaEmail.jsp?tipoSelezionato=" + tipo + "&email=" + e.getEmail() + "\"> Modifica </a>");
+                                        out.print("<a href=\"#\" onclick=\"modificaEmail('" + e.getIdEmail() + "','" + e.getEmail() + "','" + e.getePassword() + "')\"> Modifica </a>");
                                         String link = "doEliminaEmail.jsp";
-                                        out.print(" - <a href=\"javascript:confermaDelete('questa email : ','" + link + "','" + tipo + "','" + e.getIdEmail()+ "')\"> Elimina </a>");
+                                        out.print(" - <a href=\"javascript:confermaDelete('" + e.getEmail() + "','" + link + "','" + tipo + "','" + e.getIdEmail() + "')\"> Elimina </a>");
                                         out.print("</td>");
                                         out.print("</tr>");
                                     }
@@ -76,7 +76,8 @@
                                     <td><input id="tpassword" class="form-control" type="password" name="ePassword" placeholder="digita la password associata"/>
                                         <input  type="hidden" name="utente" value="${login.utente}" />
                                         <input  type="hidden" name="tipoSelezionato" value="${param.tipoSelezionato}" /></td>
-                                    <td><button type="submit" id="tnewEmail" class="btn btn-primary">AGGIUNGI</button></td>
+                                    <td><button type="submit" id="tnewEmail" class="btn btn-primary">AGGIUNGI</button>
+                                    <button type="button" id="annullaModificaEmail" class="btn btn-success" onclick="resetEmailForm()">ANNULLA</button></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -118,7 +119,7 @@
                                         String tipo = request.getParameter("tipoSelezionato");
                                         out.print("<a href=\"viewModificaSito.jsp?tipoSelezionato=" + tipo + "&sito=" + s.getIdSito() + "\"> Modifica </a>");
                                         String link = "doEliminaSito.jsp";
-                                        out.print("- <a href=\"javascript:confermaDelete('questo idSito : ','" + link + "','" + tipo + "','" + s.getIdSito() + "')\"> Elimina </a>");
+                                        out.print("- <a href=\"javascript:confermaDelete('" + s.getDescrizione() + "','" + link + "','" + tipo + "','" + s.getIdSito() + "')\"> Elimina </a>");
                                         out.print("</td>");
                                         out.print("</tr>");
                                         if (!s.getIndirizzo().isEmpty()) {
@@ -150,35 +151,42 @@
         <script  src = "//code.jquery.com/jquery-1.11.1.min.js" ></script> 
         <script  src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js" ></script>
         <script>
-        function confermaDelete(descrizione, link, tipo, any) {
-            var myLink = link;
-            var myTipo = tipo;
-            var myAny = any; // chiave primaria di eliminazione es. email=email, sito=idSito
-            swal({
-                title: 'Conferma cancellazione',
-                text: 'Sei sicuro di voler cancellare ?',
-                icon: 'warning',
-                buttons: true,
-                dangerMode: true,
-            }).then((willDelete) => {
-                if (willDelete)
-                    window.location.href = link + "?conferma=" + willDelete + "&tipoSelezionato=" + myTipo + "&any=" + myAny;
-            });
-        }
-        ;
+                                        function confermaDelete(descrizione, link, tipo, any) {
+                                            var desc = descrizione;
+                                            var myLink = link;
+                                            var myTipo = tipo;
+                                            var myAny = any; // chiave primaria di eliminazione es. email=email, sito=idSito
+                                            swal({
+                                                title: 'Conferma cancellazione',
+                                                text: 'Sei sicuro di voler cancellare ' + desc,
+                                                icon: 'warning',
+                                                buttons: true,
+                                                dangerMode: true,
+                                            }).then((willDelete) => {
+                                                if (willDelete)
+                                                    window.location.href = link + "?conferma=" + willDelete + "&tipoSelezionato=" + myTipo + "&any=" + myAny;
+                                            });
+                                        }
+                                        ;
 
-        function resetEmailForm() {
-            $("#formEmail").attr('action', 'doAggiungiEmail.jsp');
-            $('#tnewEmail').text("Aggiungi");
-        }
-        
-        function modificaEmail(idEmail, oldEmail, oldPassword) {
-            $("#formEmail").attr('action', 'doModificaEmail.jsp');
-            $("#idEmail").attr('value', idEmail);
-            $("#temail").attr('value', oldEmail);
-            $("#tpassword").attr('value', oldPassword);
-            $('#tnewEmail').text("Modifica");
-        };
+                                        function resetEmailForm() {
+                                            $("#annullaModificaEmail").hide();
+                                            $("#idEmail").attr('value', "");
+                                            $("#temail").attr('value', "");
+                                            $("#tpassword").attr('value', "");
+                                            $('#tnewEmail').text("Aggiungi");
+                                            $("#formEmail").attr('action', 'doAggiungiEmail.jsp');
+                                        }
+
+                                        function modificaEmail(idEmail, oldEmail, oldPassword) {
+                                            $("#annullaModificaEmail").show();
+                                            $("#idEmail").attr('value', idEmail);
+                                            $("#temail").attr('value', oldEmail);
+                                            $("#tpassword").attr('value', oldPassword);
+                                            $('#tnewEmail').text("Modifica");
+                                            $("#formEmail").attr('action', 'doModificaEmail.jsp');
+                                        }
+                                        ;
         </script>
     </body>
 </html>
