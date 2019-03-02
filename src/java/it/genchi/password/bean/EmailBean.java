@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
  * @author JAVASE
  */
 public class EmailBean extends MYBean {
+    private int idEmail;
     private String email;
     private String ePassword;
     private String utente;
@@ -24,6 +25,14 @@ public class EmailBean extends MYBean {
         email="";
         ePassword="";
         utente="";
+    }
+
+    public int getIdEmail() {
+        return idEmail;
+    }
+
+    public void setIdEmail(int idEmail) {
+        this.idEmail = idEmail;
     }
 
     public String getePassword() {
