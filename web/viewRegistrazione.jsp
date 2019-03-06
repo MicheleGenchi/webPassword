@@ -5,7 +5,6 @@
 --%>
 
 <%@page import="it.genchi.password.utilita.ErrMsg"%>
-<jsp:useBean id="loginreg" class="it.genchi.password.bean.LoginBean" scope="request" />
 <jsp:useBean id="login" class="it.genchi.password.bean.LoginBean" scope="session" />
 <jsp:useBean id="email" class="it.genchi.password.bean.EmailBean" scope="request" />
 <jsp:useBean id="errori" class="it.genchi.password.utilita.ErrMsg" scope="request" />
@@ -24,12 +23,10 @@
             boolean registrazione = Boolean.parseBoolean(request.getParameter("registrazione"));
             if (registrazione) {
                 onload_string="modifica();";
-        %><jsp:include page="registrazioneOK.jsp" />
-            
-        <%
+                %><jsp:include page="registrazioneOK.jsp" /><%
         } else {
-            if (loginreg.getErrore().isErr()) {
-                errori.setMsgs(loginreg.getErrore().getMsgs());
+            if (login.getErrore().isErr()) {
+                errori.setMsgs(login.getErrore().getMsgs());
         %><jsp:include page="doErrori.jsp" /><%
         } else if (email.getErrore().isErr()) {
             errori.getMsgs().addAll(email.getErrore().getMsgs());
@@ -50,7 +47,7 @@
                         <form id="loginform" class="form-horizontal" role="form" action="doRegistrazione.jsp">
                             <div style="margin-bottom: 25px" class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                <input autofocus id="login-username" type="text" class="form-control" name="utente" value="${loginreg.utente}" placeholder="Digita il tuo nome" />                                        
+                                <input autofocus id="login-username" type="text" class="form-control" name="utente" value="${login.utente}" placeholder="Digita il tuo nome" />                                        
                             </div>
                             <div style="margin-bottom: 25px" class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>

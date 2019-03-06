@@ -66,16 +66,11 @@ public class EmailBean extends MYBean {
     @Override
     public boolean isValid() {
         Matcher matcher = emailPattern.matcher(email);
-        if (email.isEmpty())
-            errore.aggiungi(Errors.RegistrazioneFallita+" email é vuota o duplicata");
-        if (ePassword.isEmpty()) 
-            errore.aggiungi(Errors.RegistrazioneFallita+" la password non può essere nulla");
-        if (utente.isEmpty())
-            errore.aggiungi(Errors.RegistrazioneFallita+" inserire un utente valido per l'email");
-        
-        if (!matcher.find())
+        if (email.isEmpty() & ePassword.isEmpty()) {
+            errore.aggiungi(Errors.RegistrazioneFallita+" completare la registrazione digitando email e password");
+        } else if (!matcher.find()) {
             errore.aggiungi(Errors.RegistrazioneFallita+" formato email errato");
-        
+        }
         return !errore.isErr();
     }
 }

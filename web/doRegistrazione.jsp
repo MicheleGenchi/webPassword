@@ -9,37 +9,37 @@
 <%@page import="it.genchi.password.db.EmailDAO"%>
 <jsp:useBean id="email" class="it.genchi.password.bean.EmailBean" scope="request" />
 <jsp:useBean id="login" class="it.genchi.password.bean.LoginBean" scope="session" />
-<jsp:useBean id="loginreg" class="it.genchi.password.bean.LoginBean" scope="request" />
-<jsp:setProperty name="loginreg" property="*" />
 <jsp:setProperty name="email" property="*" />
 <%
+    login.getErrore().clear();
+    email.getErrore().clear();
     LoginDAO daoLogin = new LoginDAO();
     EmailDAO daoEmail = new EmailDAO();
-    if (loginreg.isValid()) {
-        boolean esiste = daoLogin.trova(loginreg.getUtente());
-        if (esiste) {
-            loginreg.getErrore().aggiungi(Errors.DuplicateUtente);
-        } else {
-            if (!email.isValid()) {
-                email.getErrore().aggiungi(Errors.InvalidEmail);
-            } else {
-                esiste = daoEmail.trova(email.getEmail());
-                if (esiste) {
-                    email.getErrore().aggiungi(Errors.DuplicateEmail);
-                }
+    if (login.isValid()) {
+        boolean esiste = daoLogin.trova(login.getUtente());
+        if (esiste) 
+            login.getErrore().aggiungi(Errors.DuplicateUtente);
+    }
+    if (!login.getErrore().isErr()) {
+        if (email.isValid()) {
+            boolean esiste = daoEmail.trova(email.getIdEmail());
+            if (esiste) {
+                email.getErrore().aggiungi(Errors.DuplicateEmail);
             }
         }
     }
-
-    if (!loginreg.getErrore().isErr() && !email.getErrore().isErr()) {
-%><jsp:forward page="viewRegistrazione.jsp">
-    <jsp:param name="registrazione" value="true" />
-</jsp:forward>
-<%
     
-} else {
-%><jsp:forward page="viewRegistrazione.jsp" /><%
-}
+    if (!login.getErrore().isErr() && !email.getErrore().isErr()) {
+        daoLogin.aggiungi(login);
+        daoEmail.aggiungi(email);
+        %><jsp:forward page="viewRegistrazione.jsp">
+        <jsp:param name="registrazione" value="true" />
+            </jsp:forward>
+        <%
+    
+    } else {
+    %><jsp:forward page="viewRegistrazione.jsp" /><%
+    }
 %>
 
 

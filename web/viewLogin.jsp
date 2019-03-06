@@ -36,12 +36,12 @@
 
                             <div style="margin-bottom: 25px" class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                <input autofocus id="login-username" type="text" class="form-control" name="utente" value="" placeholder="Digita il nome utente">                                        
+                                <input autofocus id="login-username" type="text" class="form-control" name="utente" value="${login.utente}" placeholder="Digita il nome utente">                                        
                             </div>
 
                             <div style="margin-bottom: 25px" class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                <input id="login-password" type="password" class="form-control" name="password" value="" placeholder="Digita la password">
+                                <input id="login-password" type="password" class="form-control" name="password" value="${login.password}" placeholder="Digita la password">
                             </div>
 
 

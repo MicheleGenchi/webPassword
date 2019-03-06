@@ -4,15 +4,19 @@
     Author     : JAVASE
 --%>
 
+<%@page import="java.io.InputStreamReader"%>
+<%@page import="java.io.BufferedReader"%>
+<%@page import="java.io.FileInputStream"%>
 <%@page import="it.genchi.password.bean.SitoBean"%>
 <%@page import="it.genchi.password.bean.EmailBean"%>
 <%@page import="java.lang.reflect.Field"%>
+<%@page import="javax.script.*"%>
 <jsp:useBean id="login" class="it.genchi.password.bean.LoginBean" scope="session" />
 <jsp:useBean id="listaEmail" class="it.genchi.password.bean.ListaEmailBean" scope="request" />
 <jsp:useBean id="listaSiti" class="it.genchi.password.bean.ListaSitiBean" scope="request" />
 <jsp:useBean id="tipi" class="it.genchi.password.bean.MapTipoBean" scope="session" />
 <jsp:useBean id="email" class="it.genchi.password.bean.EmailBean" scope="request" />
-<jsp:useBean id="sito" class="it.genchi.password.bean.SitoBean" scope="request" />
+<jsp:useBean id="sito" class="it.genchi.password.bean.SitoBean" scope="session" />
 <jsp:useBean id="errori" class="it.genchi.password.utilita.ErrMsg" scope="request" />
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -23,7 +27,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     </head>
-    <body onload="resetEmailForm()" style="background-image: ">
+    <body onload="resetEmailForm();resetSitoForm()" style="background-image: ">
         <div class="container">
             <div class="panel panel-heading"> 
                 <center><h2 style="vertical-align: middle"><span><a href="viewLogin.jsp"><img src="home.png" /></a></span> ARCHIVIO DELLE MIE PASSWORD  </h2></center>
@@ -62,7 +66,7 @@
 //                                      out.print("<a href=\"viewModificaEmail.jsp?tipoSelezionato=" + tipo + "&email=" + e.getEmail() + "\"> Modifica </a>");
                                         out.print("<a href=\"#\" onclick=\"modificaEmail('" + e.getIdEmail() + "','" + e.getEmail() + "','" + e.getePassword() + "')\"> Modifica </a>");
                                         String link = "doEliminaEmail.jsp";
-                                        out.print(" - <a href=\"javascript:confermaDelete('" + e.getEmail() + "','" + link + "','" + tipo + "','" + e.getIdEmail() + "')\"> Elimina </a>");
+                                        out.print(" - <a href=\"#\" onclick=\"confermaDelete('" + e.getEmail() + "','" + link + "','" + tipo + "','" + e.getIdEmail() + "')\"> Elimina </a>");
                                         out.print("</td>");
                                         out.print("</tr>");
                                     }
@@ -77,7 +81,7 @@
                                         <input  type="hidden" name="utente" value="${login.utente}" />
                                         <input  type="hidden" name="tipoSelezionato" value="${param.tipoSelezionato}" /></td>
                                     <td><button type="submit" id="tnewEmail" class="btn btn-primary">AGGIUNGI</button>
-                                    <button type="button" id="annullaModificaEmail" class="btn btn-success" onclick="resetEmailForm()">ANNULLA</button></td>
+                                        <button type="button" id="annullaModificaEmail" class="btn btn-success" onclick="resetEmailForm()">ANNULLA</button></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -94,7 +98,7 @@
                     Gruppo : ${tipi.getTipi().get(param.tipoSelezionato)}
                 </div>
 
-                <form class="panel" action="doAggiungiSito.jsp">
+                <form id="formSito" class="panel" action="doAggiungiSito.jsp">
                     <div class="table-responsive">
                         <table class="table table-condensed table-hover">
                             <thead>
@@ -108,7 +112,6 @@
                             </thead>
                             <tbody>
                                 <% //creazione tabella
-
                                     for (SitoBean s : listaSiti.getLista()) {
                                         out.print("<tr>");
                                         out.print("<th scope=\"row\">" + s.getIdSito() + "</th>");
@@ -117,9 +120,10 @@
                                         out.print("<td>" + s.getPassword() + "</td>");
                                         out.print("<td>");
                                         String tipo = request.getParameter("tipoSelezionato");
-                                        out.print("<a href=\"viewModificaSito.jsp?tipoSelezionato=" + tipo + "&sito=" + s.getIdSito() + "\"> Modifica </a>");
+                                        //out.print("<a href=\"viewModificaSito.jsp?tipoSelezionato=" + tipo + "&sito=" + s.getIdSito() + "\"> Modifica </a>");
+                                        out.print("<a href=\"#\" onclick=\"modificaSito()\">Modifica</a>");
                                         String link = "doEliminaSito.jsp";
-                                        out.print("- <a href=\"javascript:confermaDelete('" + s.getDescrizione() + "','" + link + "','" + tipo + "','" + s.getIdSito() + "')\"> Elimina </a>");
+                                        out.print(" - <a href=\"#\" onclick=\"confermaDelete('" + s.getDescrizione() + "','" + link + "','" + tipo + "','" + s.getIdSito() + "')\"> Elimina </a>");
                                         out.print("</td>");
                                         out.print("</tr>");
                                         if (!s.getIndirizzo().isEmpty()) {
@@ -130,10 +134,12 @@
                             </tbody>
                             <tfoot>     
                                 <tr>
-                                    <td colspan="2"><input class="form-control" type="text" name="descrizione" placeholder="nome del sito"/></td>
-                                    <td colspan="2"><input class="form-control" type="text" name="utente" placeholder="utente di login"/></td>
-                                    <td><input class="form-control" type="password" name="password" placeholder="password del sito"/></td>
-                                    <td rowspan="3" style="vertical-align: middle; text-align: center;"><button class="btn btn-primary">AGGIUNGI</button></td>
+                                    <td colspan="2"><input type="hidden" id="idSito" name="idSito" /> 
+                                        <input id="descrizione" class="form-control" type="text" name="descrizione" placeholder="nome del sito"/></td>
+                                    <td colspan="2"><input class="form-control" type="text" id="utente" name="utente" placeholder="utente di login"/></td>
+                                    <td><input id="passwordSito" class="form-control" type="password" name="password" placeholder="password del sito"/></td>
+                                    <td rowspan="3" style="vertical-align: middle; text-align: center;"><button id="newSito" class="btn btn-primary">AGGIUNGI</button>
+                                        <button type="button" id="annullaModificaSito" class="btn btn-success" onclick="resetSitoForm()">ANNULLA</button></td>
                                 </tr>
                                 <tr>
                                     <td colspan="5"><span class="input-group-addon">Url : </span>
@@ -151,42 +157,61 @@
         <script  src = "//code.jquery.com/jquery-1.11.1.min.js" ></script> 
         <script  src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js" ></script>
         <script>
-            function confermaDelete(descrizione, link, tipo, any) {
-                var desc = descrizione;
-                var myLink = link;
-                var myTipo = tipo;
-                var myAny = any; // chiave primaria di eliminazione es. email=email, sito=idSito
-                swal({
-                    title: 'Conferma cancellazione',
-                    text: 'Sei sicuro di voler cancellare ' + desc,
-                    icon: 'warning',
-                    buttons: true,
-                    dangerMode: true,
-                }).then((willDelete) => {
-                    if (willDelete)
-                        window.location.href = link + "?conferma=" + willDelete + "&tipoSelezionato=" + myTipo + "&any=" + myAny;
-                });
-            }
-            ;
+                                            function confermaDelete(descrizione, link, tipo, any) {
+                                                var desc = descrizione;
+                                                var myLink = link;
+                                                var myTipo = tipo;
+                                                var myAny = any; // chiave primaria di eliminazione es. email=email, sito=idSito
+                                                swal({
+                                                    title: 'Conferma cancellazione',
+                                                    text: 'Sei sicuro di voler cancellare ' + desc,
+                                                    icon: 'warning',
+                                                    buttons: true,
+                                                    dangerMode: true,
+                                                }).then((willDelete) => {
+                                                    if (willDelete)
+                                                        window.location.href = link + "?conferma=" + willDelete + "&tipoSelezionato=" + myTipo + "&any=" + myAny;
+                                                });
+                                            }
+                                            ;
 
-            function resetEmailForm() {
-                $("#annullaModificaEmail").hide();
-                $("#idEmail").attr('value', "");
-                $("#temail").attr('value', "");
-                $("#tpassword").attr('value', "");
-                $('#tnewEmail').text("Aggiungi");
-                $("#formEmail").attr('action', 'doAggiungiEmail.jsp');
-            }
+                                            function resetEmailForm() {
+                                                $("#annullaModificaEmail").hide();
+                                                $("#idEmail").attr('value', "");
+                                                $("#temail").attr('value', "");
+                                                $("#tpassword").attr('value', "");
+                                                $('#tnewEmail').text("Aggiungi");
+                                                $("#formEmail").attr('action', 'doAggiungiEmail.jsp');
+                                            }
 
-            function modificaEmail(idEmail, oldEmail, oldPassword) {
-                $("#annullaModificaEmail").show();
-                $("#idEmail").attr('value', idEmail);
-                $("#temail").attr('value', oldEmail);
-                $("#tpassword").attr('value', oldPassword);
-                $('#tnewEmail').text("Modifica");
-                $("#formEmail").attr('action', 'doModificaEmail.jsp');
-            }
-            ;
+                                            function resetSitoForm() {
+                                                $("#annullaModificaSito").hide();
+                                                $("#idSito").attr('value', "");
+                                                $("#descrizione").attr('value', "");
+                                                $("#passwordSito").attr('value', "");
+                                                $('#newSito').text("Aggiungi");
+                                                $("#formSito").attr('action', 'doAggiungiSito.jsp');
+                                            }
+
+                                            function modificaSito() {
+                                                  $("#annullaModificaSito").show();
+//                                                $("#idSito").attr('value', current_sito.getidSito());
+//                                                $("#descrizione").attr('value', current_sito.getDescrizione());
+//                                                $("#utente").attr('value', current_sito.getUtente());
+//                                                $("#passwordSito").attr('value', current_sito.getPassword());
+                                                $("#newSito").text("Modifica");
+                                                $("#formSito").attr('action', 'viewModifica.jsp');
+                                            }
+
+                                            function modificaEmail(idEmail, oldEmail, oldPassword) {
+                                                $("#annullaModificaEmail").show();
+                                                $("#idEmail").attr('value', idEmail);
+                                                $("#temail").attr('value', oldEmail);
+                                                $("#tpassword").attr('value', oldPassword);
+                                                $('#tnewEmail').text("Modifica");
+                                                $("#formEmail").attr('action', 'doModificaEmail.jsp');
+                                            }
+                                            ;
         </script>
     </body>
 </html>
