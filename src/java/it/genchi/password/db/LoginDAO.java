@@ -37,7 +37,6 @@ public class LoginDAO extends DAOClass {
             st.close();
             conn.close();
         } catch (Exception ex) {
-            errore.aggiungi(Errors.LoginFallito);
             Logger.getLogger(LoginDAO.class.getName()).log(Level.SEVERE, null, ex);
             throw new RuntimeException("Database error in " + this.getClass().getSimpleName());
         } finally {
@@ -62,7 +61,6 @@ public class LoginDAO extends DAOClass {
             st.close();
             conn.close();
         } catch (Exception ex) {
-            errore.aggiungi(Errors.LoginFallito);
             Logger.getLogger(LoginDAO.class.getName()).log(Level.SEVERE, null, ex);
             throw new RuntimeException("Database error in " + this.getClass().getSimpleName());
         } finally {

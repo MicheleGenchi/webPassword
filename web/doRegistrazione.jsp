@@ -30,8 +30,6 @@
     }
     
     if (!login.getErrore().isErr() && !email.getErrore().isErr()) {
-        daoLogin.aggiungi(login);
-        daoEmail.aggiungi(email);
         %><jsp:forward page="viewRegistrazione.jsp">
         <jsp:param name="registrazione" value="true" />
             </jsp:forward>
