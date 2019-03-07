@@ -6,12 +6,11 @@
 
 <%@page import="it.genchi.password.db.EmailDAO"%>
 <jsp:useBean id="login" class="it.genchi.password.bean.LoginBean" scope="session" />
+<jsp:useBean id="email" class="it.genchi.password.bean.EmailBean" scope="request" />
+<jsp:setProperty name="email" property="*" />
 <%
-    Integer idEmail = Integer.parseInt(request.getParameter("idEmail"));
-    String email = request.getParameter("email");
-    String password = request.getParameter("ePassword");
     EmailDAO dao = new EmailDAO();
-    boolean aggiornato = dao.modifica(idEmail, email, password);
+    boolean aggiornato = dao.modifica(email);
 %>
 <jsp:forward page="doPassword.jsp">
     <jsp:param name="tipoSelezionato" value="${param.tipoSelezionato}" />

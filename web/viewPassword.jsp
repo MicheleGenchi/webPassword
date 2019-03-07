@@ -121,7 +121,9 @@
                                         out.print("<td>");
                                         String tipo = request.getParameter("tipoSelezionato");
                                         //out.print("<a href=\"viewModificaSito.jsp?tipoSelezionato=" + tipo + "&sito=" + s.getIdSito() + "\"> Modifica </a>");
-                                        out.print("<a href=\"#\" onclick=\"modificaSito()\">Modifica</a>");
+                                        out.print("<a href=\"#\" onclick=\"modificaSito('" + s.getIdSito() + "','" + 
+                                                s.getDescrizione() + "','" + s.getUtente() +  "','" + s.getPassword() + 
+                                                "','" + s.getIndirizzo() + "')\">Modifica</a>");
                                         String link = "doEliminaSito.jsp";
                                         out.print(" - <a href=\"#\" onclick=\"confermaDelete('" + s.getDescrizione() + "','" + link + "','" + tipo + "','" + s.getIdSito() + "')\"> Elimina </a>");
                                         out.print("</td>");
@@ -143,7 +145,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="5"><span class="input-group-addon">Url : </span>
-                                        <input  class="form-control" type="text"  name="indirizzo" placeholder="home page del sito web" />
+                                        <input  id="indirizzo" class="form-control" type="text"  name="indirizzo" placeholder="home page del sito web" />
                                         <input type="hidden" name="tipoSelezionato" value="${param.tipoSelezionato}"/>
                                         <input type="hidden" name="login" value="${login.utente}"/></td>
                                 </tr>
@@ -193,14 +195,15 @@
                                                 $("#formSito").attr('action', 'doAggiungiSito.jsp');
                                             }
 
-                                            function modificaSito() {
-                                                  $("#annullaModificaSito").show();
-//                                                $("#idSito").attr('value', current_sito.getidSito());
-//                                                $("#descrizione").attr('value', current_sito.getDescrizione());
-//                                                $("#utente").attr('value', current_sito.getUtente());
-//                                                $("#passwordSito").attr('value', current_sito.getPassword());
+                                            function modificaSito(idSito, oldDescrizione, oldUtente, oldPassword, oldIndirizzo) {
+                                                $("#annullaModificaSito").show();
+                                                $("#idSito").attr('value', idSito);
+                                                $("#descrizione").attr('value', oldDescrizione);
+                                                $("#utente").attr('value', oldUtente);
+                                                $("#passwordSito").attr('value', oldPassword);
+                                                $("#indirizzo").attr('value', oldIndirizzo);
                                                 $("#newSito").text("Modifica");
-                                                $("#formSito").attr('action', 'viewModificaSito.jsp');
+                                                $("#formSito").attr('action', 'doModificaSito.jsp');
                                             }
 
                                             function modificaEmail(idEmail, oldEmail, oldPassword) {

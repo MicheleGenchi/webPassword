@@ -20,15 +20,15 @@ import java.util.logging.Logger;
  */
 public class EmailDAO extends DAOClass {
     
-    public boolean modifica(Integer idEmail, String newEmail, String newPassword) {
+    public boolean modifica(EmailBean newEmail) {
         boolean aggiornato=false;
         String sql="UPDATE password2.email set email=?, password=? where idEmail=?"; 
         try (
                 Connection conn = DBConnect.get();
                 PreparedStatement st = conn.prepareStatement(sql)) {
-            st.setString(1, newEmail);
-            st.setString(2, newPassword);
-            st.setInt(3, idEmail); //primary key, indice email univoco
+            st.setString(1, newEmail.getEmail());
+            st.setString(2, newEmail.getePassword());
+            st.setInt(3, newEmail.getIdEmail()); //primary key, indice email univoco
             int nRow = st.executeUpdate();
             aggiornato = nRow>0;
             st.close();

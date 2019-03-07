@@ -5,6 +5,7 @@
  */
 package it.genchi.password.db;
 
+import it.genchi.password.bean.EmailBean;
 import it.genchi.password.bean.ListaBean;
 import it.genchi.password.bean.SitoBean;
 import java.sql.Connection;
@@ -25,8 +26,8 @@ public class SitoDAO extends DAOClass {
         boolean valid = false;
         String sql = "SELECT idSito,descrizione,indirizzo,utente,password, "
                 + "idTipo,login FROM password2.sito where login=? and idTipo=? order by descrizione;";
-        String utente=stringa[0];
-        String idTipo=stringa[1];
+        String utente = stringa[0];
+        String idTipo = stringa[1];
         try {
             Connection conn = DBConnect.get();
             PreparedStatement st = conn.prepareStatement(sql);
@@ -79,8 +80,8 @@ public class SitoDAO extends DAOClass {
         }
         return valid;
     }
-    
-        public boolean elimina(Integer sitoToSearch) {
+
+    public boolean elimina(Integer sitoToSearch) {
         boolean isDeleted = false;
         String sql = "delete from sito where idSito=?";
         try (
@@ -95,4 +96,29 @@ public class SitoDAO extends DAOClass {
             return isDeleted;
         }
     }
+    
+        public boolean modifica(SitoBean newSito) {
+        boolean aggiornato=false;
+        String sql="UPDATE password2.sito set descrizione=?, utente=?, password=?, indirizzo=?, idTipo=? where idSito=?"; 
+        try (
+                Connection conn = DBConnect.get();
+                PreparedStatement st = conn.prepareStatement(sql)) {
+            st.setString(1, newSito.getDescrizione());
+            st.setString(2, newSito.getUtente());
+            st.setString(3, newSito.getPassword());
+            st.setString(4, newSito.getIndirizzo());
+            st.setString(5, newSito.getIdTipo());
+            st.setInt(6, newSito.getIdSito()); //primary key, indice email univoco
+            int nRow = st.executeUpdate();
+            aggiornato = nRow>0;
+            st.close();
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(TipoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException("database error in " + this.getClass().getSimpleName(), ex);
+        } finally {
+            return aggiornato;
+        }
+    }
+
 }
