@@ -8,37 +8,44 @@
 <%@page import="it.genchi.password.db.LoginDAO"%>
 <%@page import="it.genchi.password.db.EmailDAO"%>
 <jsp:useBean id="email" class="it.genchi.password.bean.EmailBean" scope="request" />
+<jsp:useBean id="errori" class="it.genchi.password.utilita.ErrMsg" scope="request" />
 <jsp:useBean id="login" class="it.genchi.password.bean.LoginBean" scope="session" />
 <jsp:setProperty name="email" property="*" />
+
 <%
     login.getErrore().clear();
     email.getErrore().clear();
+    errori.clear();
     LoginDAO daoLogin = new LoginDAO();
     EmailDAO daoEmail = new EmailDAO();
     if (login.isValid()) {
         boolean esiste = daoLogin.trova(login.getUtente());
-        if (esiste) 
+        if (esiste) {
             login.getErrore().aggiungi(Errors.DuplicateUtente);
-    }
-    if (!login.getErrore().isErr()) {
-        if (email.isValid()) {
-            boolean esiste = daoEmail.trova(email.getIdEmail());
-            if (esiste) {
-                email.getErrore().aggiungi(Errors.DuplicateEmail);
+        } else {
+            if (email.isValid()) {
+                esiste = daoEmail.trova(email.getIdEmail());
+                if (esiste) {
+                    email.getErrore().aggiungi(Errors.DuplicateEmail);
+                }
+            } else {
+                errori.setMsgs(email.getErrore().getMsgs());
             }
         }
-    }
-    
-    if (!login.getErrore().isErr() && !email.getErrore().isErr()) {
-        %><jsp:forward page="viewRegistrazione.jsp">
-        <jsp:param name="registrazione" value="true" />
-            </jsp:forward>
-        <%
-    
     } else {
-    %><jsp:forward page="viewRegistrazione.jsp" /><%
+        errori.setMsgs(login.getErrore().getMsgs());
+    }
+
+    if (!login.getErrore().isErr() && !email.getErrore().isErr()) {
+%><jsp:forward page="viewRegistrazione.jsp">
+    <jsp:param name="registrazione" value="true" />
+</jsp:forward>
+<%
     }
 %>
+<jsp:forward page="viewRegistrazione.jsp" />
+
+
 
 
 

@@ -8,7 +8,6 @@
 <jsp:useBean id="login" class="it.genchi.password.bean.LoginBean" scope="session" />
 <jsp:useBean id="email" class="it.genchi.password.bean.EmailBean" scope="request" />
 <jsp:useBean id="errori" class="it.genchi.password.utilita.ErrMsg" scope="request" />
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,24 +17,21 @@
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     </head>
 
-          <%
-              String  onload_string="";
-            boolean registrazione = Boolean.parseBoolean(request.getParameter("registrazione"));
-            if (registrazione) {
-                onload_string="modifica();";
-                %><jsp:include page="registrazioneOK.jsp" /><%
-        } else {
-            if (login.getErrore().isErr()) {
-                errori.setMsgs(login.getErrore().getMsgs());
-        %><jsp:include page="doErrori.jsp" /><%
-        } else if (email.getErrore().isErr()) {
-            errori.getMsgs().addAll(email.getErrore().getMsgs());
-        %><jsp:include page="doErrori.jsp" /><%
-                }
+    <%
+        String onload_string = "";
+        boolean registrazione = Boolean.parseBoolean(request.getParameter("registrazione"));
+        if (registrazione) {
+            errori.clear();
+            onload_string = "modifica();";
+    %><jsp:include page="registrazioneOK.jsp" /><%
+    } else {
+        if (errori.isErr()) {
+    %><jsp:include page="doErrori.jsp" /><%
             }
-        %>
+        }
+    %>
 
-    <body onload="<%= onload_string %>" style="background-color: navy">
+    <body onload="<%= onload_string%>" style="background-color: navy">
         <div class="container">    
             <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2">                                
                 <div class="panel panel-info" >
@@ -65,7 +61,7 @@
 
                             <div style="margin-top:10px" class="form-group">                                <!-- Button -->
                                 <div class="col-sm-12 controls">
-                                    <button type="submit" id="btn-registrati"  name="conferma" class="btn btn-primary" value="registrati">Registrati</button>
+                                    <input type="submit" id="btn-registrati"  name="conferma" class="btn btn-primary" value="registrati"></input>
                                 </div>
                             </div>
                         </form>     
@@ -76,12 +72,13 @@
         <script  src = "//code.jquery.com/jquery-1.11.1.min.js" ></script> 
         <script  src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js" ></script> 
         <script type="text/javascript">
-                                        function modifica() {
-                                            $("#title").replaceWith("Utente già registrato");
-                                            $("#loginform").attr('action','doTipo.jsp');
-                                            $("#btn-registrati").html("ENTRA");
-                                            swal("Congratulazioni!", "Ora sei un utente registrato \nPremi Entra per accedere con le credenziali", "success");
-                                        };
+            function modifica() {
+                $("#title").replaceWith("Utente già registrato");
+                $("#loginform").attr('action', 'doTipo.jsp');
+                $("#btn-registrati").html("ENTRA");
+                swal("Congratulazioni!", "Ora sei un utente registrato \nPremi Entra per accedere con le credenziali", "success");
+            }
+            ;
         </script>
     </body>
 </html>
