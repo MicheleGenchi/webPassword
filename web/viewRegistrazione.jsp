@@ -62,7 +62,7 @@
 
                             <div style="margin-top:10px" class="form-group">                                <!-- Button -->
                                 <div class="col-sm-12 controls">
-                                    <input type="submit" id="btn-registrati"  name="conferma" class="btn btn-primary" value="registrati"></input>
+                                    <button type="submit" id="btn-registrati"  name="conferma" class="btn btn-primary" value="registrati"></Button>
                                 </div>
                             </div>
                         </form>     
