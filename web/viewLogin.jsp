@@ -6,6 +6,7 @@
 
 <jsp:useBean id="login" class="it.genchi.password.bean.LoginBean" scope="session" />
 <jsp:useBean id="errori" class="it.genchi.password.utilita.ErrMsg" scope="request" />
+<jsp:setProperty name="login" property="*" />
 <!DOCTYPE html>
 <hmtl>
     <head>

@@ -4,6 +4,8 @@
     Author     : JAVASE
 --%>
 
+<%@page import="it.genchi.password.db.EmailDAO"%>
+<%@page import="it.genchi.password.db.LoginDAO"%>
 <%@page import="it.genchi.password.utilita.ErrMsg"%>
 <jsp:useBean id="login" class="it.genchi.password.bean.LoginBean" scope="request" />
 <jsp:useBean id="email" class="it.genchi.password.bean.EmailBean" scope="request" />
@@ -22,11 +24,15 @@
         String onload_string = "";
         boolean registrazione = Boolean.parseBoolean(request.getParameter("registrazione"));
         if (registrazione) {
-            errori.clear();
-            onload_string = "modifica();";
-    %><jsp:include page="registrazioneOK.jsp" /><%
-    } else {
-        if (errori.isErr()) {
+            // Se la registrazione viene fatta 
+            errori.clear();  // cancelliamo gli errori, 
+            onload_string = "modifica();";  // modifichiamo la pagina corrente
+            LoginDAO daoLogin = new LoginDAO();       // salviamo i dati
+            EmailDAO daoEmail = new EmailDAO();
+            daoLogin.aggiungi(login);
+            daoEmail.aggiungi(email);
+        } else {
+            if (errori.isErr()) {
     %><jsp:include page="doErrori.jsp" /><%
             }
         }
@@ -62,7 +68,8 @@
 
                             <div style="margin-top:10px" class="form-group">                                <!-- Button -->
                                 <div class="col-sm-12 controls">
-                                    <button type="submit" id="btn-registrati"  name="conferma" class="btn btn-primary" value="registrati"></Button>
+                                    <button type="submit" id="btn-registrati"  name="conferma" class="btn btn-primary" value="registrati">Registrati
+                                    </Button>
                                 </div>
                             </div>
                         </form>     
