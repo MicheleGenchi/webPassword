@@ -25,19 +25,20 @@
             login.getErrore().aggiungi(Errors.DuplicateUtente);
         } else {
             if (email.isValid()) {
-                esiste = daoEmail.trova(email.getIdEmail());
+                esiste = daoEmail.trova(email.getEmail());
                 if (esiste) {
                     email.getErrore().aggiungi(Errors.DuplicateEmail);
                 }
-            } else {
-                errori.setMsgs(email.getErrore().getMsgs());
             }
         }
-    } else {
+    }
+    if (login.getErrore().isErr()) {
         errori.setMsgs(login.getErrore().getMsgs());
+    } else if (email.getErrore().isErr()) {
+        errori.setMsgs(email.getErrore().getMsgs());
     }
 
-    if (!login.getErrore().isErr() && !email.getErrore().isErr()) {
+    if (!errori.isErr()) {
 %><jsp:forward page="viewRegistrazione.jsp">
     <jsp:param name="registrazione" value="true" />
 </jsp:forward>
