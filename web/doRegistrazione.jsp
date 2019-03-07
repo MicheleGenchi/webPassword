@@ -9,7 +9,8 @@
 <%@page import="it.genchi.password.db.EmailDAO"%>
 <jsp:useBean id="email" class="it.genchi.password.bean.EmailBean" scope="request" />
 <jsp:useBean id="errori" class="it.genchi.password.utilita.ErrMsg" scope="request" />
-<jsp:useBean id="login" class="it.genchi.password.bean.LoginBean" scope="session" />
+<jsp:useBean id="login" class="it.genchi.password.bean.LoginBean" scope="request" />
+<jsp:setProperty name="login" property="*" />
 <jsp:setProperty name="email" property="*" />
 
 <%

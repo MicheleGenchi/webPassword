@@ -48,7 +48,7 @@
                                 <!-- Button -->
 
                                 <div class="col-sm-12 controls">
-                                    <button formAction="doLogin.jsp" id="btn-login" href="#" class="btn btn-success">Entra  </button>
+                                    <button formAction="doLogin.jsp" id="btn-login" href="#" class="btn btn-success">Entra</button>
                                 </div>
                             </div>
 
@@ -57,7 +57,7 @@
                                 <div class="col-md-12 control">
                                     <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
                                         Non ho un account! 
-                                        <button  type="submit" formaction="viewRegistrazione.jsp" id="btn-fblogin" href="#"  class="btn btn-primary">Registrami</button>
+                                        <button  formaction="viewRegistrazione.jsp" id="btn-fblogin" href="#"  class="btn btn-primary">Registrami</button>
                                     </div>
                                 </div>
                             </div>    
