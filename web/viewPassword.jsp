@@ -200,7 +200,7 @@
 //                                                $("#utente").attr('value', current_sito.getUtente());
 //                                                $("#passwordSito").attr('value', current_sito.getPassword());
                                                 $("#newSito").text("Modifica");
-                                                $("#formSito").attr('action', 'viewModifica.jsp');
+                                                $("#formSito").attr('action', 'viewModificaSito.jsp');
                                             }
 
                                             function modificaEmail(idEmail, oldEmail, oldPassword) {
